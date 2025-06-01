@@ -1,0 +1,189 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Home, MessageSquare, UserCircle, Search, LogIn, Beer, Wine, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/auth/auth-provider";
+
+export function Navbar() {
+  const pathname = usePathname();
+  const { user } = useAuth();
+  
+  // Mobile bottom navigation
+  const mobileNav = (
+    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl">
+      {/* Decorative foam bubbles */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pub-foam/80 to-transparent"></div>
+      
+      <div className="grid h-full grid-cols-4 px-2 relative">
+        {/* Background pattern */}
+        <div className="absolute inset-0 bg-wood-texture opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-pub-mahogany/50 to-transparent"></div>
+        
+        <NavButton href="/" icon={<Home className="h-5 w-5" />} label="Home" active={pathname === "/"} />
+        <NavButton href="/search" icon={<Search className="h-5 w-5" />} label="Search" active={pathname === "/search"} />
+        <NavButton 
+          href={user ? "/chat" : "/login"} 
+          icon={<MessageSquare className="h-5 w-5" />} 
+          label="Chat" 
+          active={pathname === "/chat"} 
+        />
+        <NavButton 
+          href={user ? "/profile" : "/login"} 
+          icon={user ? <UserCircle className="h-5 w-5" /> : <LogIn className="h-5 w-5" />} 
+          label={user ? "Profile" : "Login"} 
+          active={pathname === "/profile" || pathname === "/login"} 
+        />
+      </div>
+    </div>
+  );
+
+  // Desktop sidebar
+  const desktopNav = (
+    <div className="fixed left-0 top-0 bottom-0 w-[250px] bg-gradient-to-b from-pub-mahogany to-pub-mahogany/95 border-r border-pub-brass/40 shadow-2xl hidden md:block">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 bg-wood-texture opacity-30"></div>
+      <div className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-pub-brass/80 via-pub-gold/60 to-pub-copper/80"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-pub-amber/5 to-pub-gold/10"></div>
+      
+      <div className="p-6 relative z-10">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="relative">
+            <Beer className="h-8 w-8 text-pub-amber" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-pub-foam rounded-full animate-fizz"></div>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-pub-gold to-pub-amber bg-clip-text text-transparent drop-shadow-lg">
+              Bar Hub
+            </h1>
+            <div className="flex items-center gap-1">
+              <Users className="h-3 w-3 text-pub-copper" />
+              <p className="text-pub-foam text-sm font-medium">Find your crowd</p>
+            </div>
+          </div>
+        </div>
+        
+        {        /* Decorative separator */}
+        <div className="flex items-center gap-2 my-4">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-pub-brass/70 to-transparent"></div>
+          <Wine className="h-4 w-4 text-pub-copper animate-cheers" />
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-pub-brass/70 to-transparent"></div>
+        </div>
+      </div>
+      
+      <div className="px-3 py-2 relative z-10">
+        <SidebarNavButton href="/" icon={<Home className="h-5 w-5 mr-2" />} label="Home" active={pathname === "/"} />
+        <SidebarNavButton href="/search" icon={<Search className="h-5 w-5 mr-2" />} label="Search" active={pathname === "/search"} />
+        <SidebarNavButton 
+          href={user ? "/chat" : "/login"} 
+          icon={<MessageSquare className="h-5 w-5 mr-2" />} 
+          label="Chat" 
+          active={pathname === "/chat"}
+        />
+        <SidebarNavButton 
+          href={user ? "/profile" : "/login"} 
+          icon={user ? <UserCircle className="h-5 w-5 mr-2" /> : <LogIn className="h-5 w-5 mr-2" />}
+          label={user ? "Profile" : "Login"} 
+          active={pathname === "/profile" || pathname === "/login"} 
+        />
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {mobileNav}
+      {desktopNav}
+    </>
+  );
+}
+
+interface NavButtonProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
+}
+
+function NavButton({ href, icon, label, active }: NavButtonProps) {
+  return (
+    <Link href={href} className={cn(
+      "flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-all duration-300 active:scale-95 group relative overflow-hidden",        active 
+        ? "text-pub-foam bg-pub-amber/30 shadow-lg border border-pub-brass/50" 
+        : "text-pub-foam hover:text-pub-foam hover:bg-pub-amber/20 hover:border-pub-brass/40 border border-transparent"
+    )}>
+      {active && (
+        <div className="absolute inset-0 bg-gradient-to-t from-pub-amber/30 to-transparent rounded-lg"></div>
+      )}
+      
+      {/* Icon with enhanced animation */}
+      <div className={cn(
+        "transition-all duration-300 relative z-10",
+        active ? "scale-110 animate-bounce" : "group-hover:scale-110 group-hover:animate-pulse"
+      )}>
+        {icon}
+        {/* Add sparkle effect for active state */}
+        {active && (
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-pub-foam rounded-full animate-fizz"></div>
+        )}
+      </div>
+      
+      {/* Label with enhanced styling */}
+      <span className={cn(
+        "text-xs mt-1 font-medium transition-all duration-300 relative z-10",
+        active 
+          ? "text-pub-foam font-semibold" 
+          : "text-pub-foam group-hover:text-pub-foam"
+      )}>{label}</span>
+      
+      {/* Hover ripple effect */}
+      <div className="absolute inset-0 bg-pub-gold/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 opacity-0 group-hover:opacity-100"></div>
+    </Link>
+  );
+}
+
+function SidebarNavButton({ href, icon, label, active }: NavButtonProps) {
+  return (
+    <Link href={href} className="block mb-1">
+      <Button 
+        variant={active ? "secondary" : "ghost"} 
+        className={cn(
+          "w-full justify-start text-base font-normal h-11 transition-all duration-300 group relative overflow-hidden border",
+          active 
+            ? "font-semibold bg-pub-amber/30 text-pub-foam border-pub-brass/60 shadow-lg" 
+            : "text-pub-foam hover:text-pub-foam hover:bg-pub-amber/20 border-transparent hover:border-pub-brass/50 hover:shadow-md"
+        )}
+      >
+        {/* Background effects */}
+        {active && (
+          <div className="absolute inset-0 bg-gradient-to-r from-pub-amber/30 to-pub-gold/20 opacity-50"></div>
+        )}
+        <div className="absolute inset-0 bg-pub-copper/5 scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 flex items-center">
+          <div className={cn(
+            "transition-all duration-300",
+            active ? "animate-pulse" : "group-hover:scale-110"
+          )}>
+            {icon}
+          </div>
+          <span className="relative">
+            {label}
+            {/* Active indicator */}
+            {active && (
+              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-pub-gold to-pub-amber"></div>
+            )}
+          </span>
+        </div>
+        
+        {/* Side accent for active state */}
+        {active && (
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-pub-gold to-pub-amber rounded-r"></div>
+        )}
+      </Button>
+    </Link>
+  );
+}

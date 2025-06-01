@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Pub/Bar themed dark colors only */
+    --background: 20 25% 8%;
+    --foreground: 45 30% 95%;
+    --card: 20 30% 12%;
+    --card-foreground: 45 30% 95%;
+    --popover: 20 30% 12%;
+    --popover-foreground: 45 30% 95%;
+    --primary: 45 85% 60%;
+    --primary-foreground: 20 25% 8%;
+    --secondary: 25 40% 15%;
+    --secondary-foreground: 45 30% 95%;
+    --muted: 25 25% 18%;
+    --muted-foreground: 45 15% 70%;
+    --accent: 45 75% 55%;
+    --accent-foreground: 20 25% 8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 45 30% 95%;
+    --border: 25 30% 20%;
+    --input: 25 30% 20%;
+    --ring: 45 85% 60%;
+    
+    /* Custom pub theme colors */
+    --pub-amber: 45 90% 55%;
+    --pub-copper: 25 75% 45%;
+    --pub-mahogany: 15 40% 25%;
+    --pub-brass: 50 80% 65%;
+    --pub-leather: 25 35% 30%;
+    --pub-foam: 45 30% 95%;
+    --pub-gold: 50 100% 60%;
+  }
+
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  /* Mobile-first responsive text utilities */
+  .text-responsive {
+    font-size: 0.875rem;
+  }
+  
+  @screen sm {
+    .text-responsive {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Touch-friendly tap targets */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better mobile line clamping */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  
+  /* Mobile scrolling improvements */
+  .scroll-smooth-mobile {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile-optimized focus states */
+  .mobile-focus:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+  
+  /* Pub-themed custom utilities */
+  .bg-pub-amber { background-color: hsl(var(--pub-amber)); }
+  .bg-pub-copper { background-color: hsl(var(--pub-copper)); }
+  .bg-pub-mahogany { background-color: hsl(var(--pub-mahogany)); }
+  .bg-pub-brass { background-color: hsl(var(--pub-brass)); }
+  .bg-pub-leather { background-color: hsl(var(--pub-leather)); }
+  .bg-pub-foam { background-color: hsl(var(--pub-foam)); }
+  .bg-pub-gold { background-color: hsl(var(--pub-gold)); }
+  
+  .text-pub-amber { color: hsl(var(--pub-amber)); }
+  .text-pub-copper { color: hsl(var(--pub-copper)); }
+  .text-pub-mahogany { color: hsl(var(--pub-mahogany)); }
+  .text-pub-brass { color: hsl(var(--pub-brass)); }
+  .text-pub-leather { color: hsl(var(--pub-leather)); }
+  .text-pub-foam { color: hsl(var(--pub-foam)); }
+  .text-pub-gold { color: hsl(var(--pub-gold)); }
+  
+  .border-pub-amber { border-color: hsl(var(--pub-amber)); }
+  .border-pub-copper { border-color: hsl(var(--pub-copper)); }
+  .border-pub-brass { border-color: hsl(var(--pub-brass)); }
+  
+  /* Pub-themed animations */
+  .animate-fizz {
+    animation: fizz 0.6s ease-out;
+  }
+  
+  .animate-pour {
+    animation: pour 1.2s ease-in-out infinite;
+  }
+  
+  .animate-bubble {
+    animation: bubble 3s ease-in-out infinite;
+  }
+  
+  @keyframes glow {
+    from { box-shadow: 0 0 5px hsl(var(--pub-amber)), 0 0 10px hsl(var(--pub-amber)), 0 0 15px hsl(var(--pub-amber)); }
+    to { box-shadow: 0 0 10px hsl(var(--pub-amber)), 0 0 20px hsl(var(--pub-amber)), 0 0 30px hsl(var(--pub-amber)); }
+  }
+  
+  @keyframes fizz {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
+    100% { transform: translateY(-20px) scale(0.9); opacity: 0; }
+  }
+  
+  @keyframes pour {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.1); }
+  }
+  
+  @keyframes bubble {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-5px) scale(1.05); opacity: 1; }
+  }
+  
+  /* Glass morphism effects for pub feel */
+  .glass-effect {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Wood texture effects */
+  .wood-texture {
+    background-image: 
+      linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.1) 50%, transparent 100%),
+      linear-gradient(0deg, rgba(139,69,19,0.1) 0%, transparent 20%, transparent 80%, rgba(139,69,19,0.1) 100%);
+  }
+  
+  /* Metal shine effects */
+  .metal-shine {
+    background: linear-gradient(135deg, 
+      hsl(var(--pub-brass)) 0%, 
+      hsl(var(--pub-gold)) 50%, 
+      hsl(var(--pub-brass)) 100%);
+    position: relative;
+  }
+  
+  .metal-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shine 2s ease-in-out infinite;
+  }
+  
+  @keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+}
