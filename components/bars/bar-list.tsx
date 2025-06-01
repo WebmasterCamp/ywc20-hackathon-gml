@@ -4,11 +4,26 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { MOCK_BARS } from "@/lib/constants";
-import { User, MapPin, Wine, Navigation, Users2 } from "lucide-react";
+import { User, MapPin, Wine, Navigation, Users2, ExternalLink, Music } from "lucide-react";
 
 export function BarList() {
   const router = useRouter();
   const [bars] = useState(MOCK_BARS);
+
+  // Function to open Google Maps
+  const openGoogleMaps = (bar: any, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent card click
+    const { coordinates, location } = bar;
+    let mapsUrl;
+    
+    if (coordinates) {
+      mapsUrl = `https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}`;
+    } else {
+      mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+    }
+    
+    window.open(mapsUrl, '_blank');
+  };
 
   // Generate mock male/female counts for each bar
   const getGenderCounts = (barId: string, activeUsers: number) => {
@@ -127,19 +142,44 @@ export function BarList() {
                         {index % 2 === 0 ? "เปิด" : "ปิดเร็ว"}
                       </span>
                     </div>
-                  </div>
-
-                  {/* Content Below Image */}
+                  </div>                  {/* Content Below Image */}
                   <div className="p-4">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors text-base line-clamp-1">
                         {bar.name}
                       </h3>
+                      {/* Google Maps Button */}
+                      <button
+                        onClick={(e) => openGoogleMaps(bar, e)}
+                        className="flex items-center gap-1 px-2 py-1 text-xs bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-700 dark:text-blue-300 rounded-md transition-colors"
+                        title="เปิดใน Google Maps"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        แผนที่
+                      </button>
                     </div>
                     
-                    <div className="flex items-center gap-1 mb-3 text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center gap-1 mb-2 text-gray-600 dark:text-gray-400">
                       <MapPin className="w-4 h-4 flex-shrink-0" />
                       <span className="text-sm line-clamp-1">{bar.location}</span>
+                    </div>
+
+                    {/* Genre */}
+                    <div className="flex items-center gap-1 mb-2">
+                      <Music className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <span className="text-sm text-purple-700 dark:text-purple-400 font-medium">
+                        แนวดนตรี: {bar.genre}
+                      </span>
+                    </div>
+
+                    {/* Today's Band */}
+                    <div className="mb-3 p-2 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                      <div className="text-xs text-orange-700 dark:text-orange-300 font-medium mb-1">
+                        วงดนตรีวันนี้:
+                      </div>
+                      <div className="text-sm font-semibold text-orange-800 dark:text-orange-200">
+                        {bar.todaysBand}
+                      </div>
                     </div>
                     
                     <div className="flex items-center justify-between">

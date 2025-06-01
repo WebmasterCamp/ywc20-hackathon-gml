@@ -8,7 +8,10 @@ export const MOCK_BARS = [
     location: "95/1 ซอยไอยราแกรนด์ คลองหนึ่ง คลองหลวง ปทุมธานี",
     activeUsers: 37,
     category: "pub",
-    features: ["Live Music", "Budget Friendly", "Student Crowd"]
+    features: ["Live Music", "Budget Friendly", "Student Crowd"],
+    genre: "อินดี้ป็อป",
+    todaysBand: "วง The Young Blues",
+    coordinates: { lat: 14.046505, lng: 100.595893 }
   },
   {
     id: "2",
@@ -19,7 +22,10 @@ export const MOCK_BARS = [
     location: "797/2 ถ.พหลโยธิน ประชาธิปัตย์ ธัญบุรี ปทุมธานี",
     activeUsers: 45,
     category: "bistro",
-    features: ["Live Music", "Food Served", "Indoor/Outdoor"]
+    features: ["Live Music", "Food Served", "Indoor/Outdoor"],
+    genre: "แจ๊ส",
+    todaysBand: "วง Midnight Jazz",
+    coordinates: { lat: 14.033284, lng: 100.615342 }
   },
   {
     id: "3",
@@ -30,7 +36,10 @@ export const MOCK_BARS = [
     location: "5/55 เอกเจริญ ลาภพัฒนา หลักหก เมืองปทุมธานี",
     activeUsers: 58,
     category: "club",
-    features: ["Pool Tables", "Live Music", "Party Vibe"]
+    features: ["Pool Tables", "Live Music", "Party Vibe"],
+    genre: "EDM",
+    todaysBand: "DJ Neon Night",
+    coordinates: { lat: 14.028756, lng: 100.578234 }
   },
   {
     id: "4",
@@ -41,7 +50,10 @@ export const MOCK_BARS = [
     location: "ประชาธิปัตย์ ธัญบุรี ปทุมธานี",
     activeUsers: 29,
     category: "bar",
-    features: ["Funk Music", "Relaxed Vibe", "Young Crowd"]
+    features: ["Funk Music", "Relaxed Vibe", "Young Crowd"],
+    genre: "ฟังค์",
+    todaysBand: "วง Groove Master",
+    coordinates: { lat: 14.041523, lng: 100.608765 }
   },
   {
     id: "5",
@@ -52,7 +64,10 @@ export const MOCK_BARS = [
     location: "62/14 หมู่ 7 คลองหนึ่ง คลองหลวง ปทุมธานี",
     activeUsers: 34,
     category: "pub",
-    features: ["Chill Vibe", "Live Music", "Close to TU"]
+    features: ["Chill Vibe", "Live Music", "Close to TU"],
+    genre: "ดนตรีสด",
+    todaysBand: "วง Acoustic Dreams",
+    coordinates: { lat: 14.069811, lng: 100.597123 }
   },
   {
     id: "6",
@@ -63,7 +78,10 @@ export const MOCK_BARS = [
     location: "62 ธรรมศาสตร์ 14 คลองหนึ่ง คลองหลวง ปทุมธานี",
     activeUsers: 22,
     category: "bistro",
-    features: ["Cocktails", "Folk Music", "Romantic Spot"]
+    features: ["Cocktails", "Folk Music", "Romantic Spot"],
+    genre: "โฟล์คซอง",
+    todaysBand: "วง Vintage Soul",
+    coordinates: { lat: 14.074562, lng: 100.599876 }
   }
 ];
 

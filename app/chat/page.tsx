@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { MOCK_MESSAGES, Message } from "@/lib/constants";
+import { MOCK_MESSAGES } from "@/lib/constants";
+import { Message } from "@/lib/type";
 import { PageHeader } from "@/components/layout/page-header";
-import { CarØ } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChatRoom } from "@/components/chat/chat-room";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -22,7 +23,13 @@ export default function ChatPage() {
     }
     
     // Load initial messages
-    setMessages(MOCK_MESSAGES);
+    const transformedMessages: Message[] = MOCK_MESSAGES.map(msg => ({
+      ...msg,
+      username: msg.userName,
+      avatar: `https://ui-avatars.com/api/?name=${msg.userName.slice(0, 2)}&background=random`,
+      timestamp: msg.timestamp.toISOString()
+    }));
+    setMessages(transformedMessages);
     
     // Simulate receiving new messages periodically
     const interval = setInterval(() => {
