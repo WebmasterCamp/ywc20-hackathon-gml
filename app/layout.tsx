@@ -1,12 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Bai_Jamjuree } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { Navbar } from '@/components/layout/navbar';
 import { AuthProvider } from '@/components/auth/auth-provider';
 
-const inter = Inter({ subsets: ['latin'] });
+const baiJamjuree = Bai_Jamjuree({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export const metadata: Metadata = {
   title: 'มานัส.ไทย',
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={baiJamjuree.className}>
         <AuthProvider>
           <ThemeProvider>
             <div className="flex flex-col min-h-screen">
