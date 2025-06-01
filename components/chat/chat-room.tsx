@@ -7,7 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Message, User } from "@/lib/constants";
+import { Message } from "@/lib/type";
+import { User } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 interface ChatRoomProps {

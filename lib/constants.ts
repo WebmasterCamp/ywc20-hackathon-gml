@@ -1,4 +1,22 @@
-export const MOCK_BARS = [
+export interface Bar {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  rating: number;
+  location: string;
+  activeUsers: number;
+  category: "pub" | "bar" | "club" | "bistro";
+  features: string[];
+  genre: string;
+  todaysBand: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
+export const MOCK_BARS: Bar[] = [
   {
     id: "1",
     name: "Buzem music bar",
@@ -84,7 +102,6 @@ export const MOCK_BARS = [
     coordinates: { lat: 14.074562, lng: 100.599876 }
   }
 ];
-
 
 export const MOCK_MESSAGES = [
   {
@@ -260,8 +277,7 @@ export const MOCK_USERS: User[] = [
       favoriteCategories: ["bar"],
       notifications: true
     }
-  },
-  {
+  },  {
     id: "user6",
     username: "Lisa",
     email: "lisa@example.com",

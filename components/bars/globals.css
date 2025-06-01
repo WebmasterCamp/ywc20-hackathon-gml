@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {  :root {
+    /* Custom themed dark colors with purple/pink palette */
+    --background: 240 100% 6%;        /* #00001F - very dark navy */
+    --foreground: 320 100% 96%;       /* Light pink text */
+    --card: 240 50% 10%;              /* Slightly lighter dark navy */
+    --card-foreground: 320 100% 96%;
+    --popover: 240 50% 10%;
+    --popover-foreground: 320 100% 96%;
+    --primary: 295 47% 48%;           /* #9F45B0 - main purple */
+    --primary-foreground: 320 100% 96%;
+    --secondary: 240 30% 15%;         /* Dark navy variant */
+    --secondary-foreground: 320 100% 96%;
+    --muted: 240 25% 18%;
+    --muted-foreground: 320 50% 80%;
+    --accent: 332 98% 77%;            /* #FE8CC5 - bright pink */
+    --accent-foreground: 240 100% 6%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 320 100% 96%;
+    --border: 240 30% 20%;
+    --input: 240 30% 20%;
+    --ring: 295 47% 48%;
+    
+    /* Custom theme colors based on your palette */
+    --theme-purple: 295 47% 48%;      /* #9F45B0 */
+    --theme-pink: 332 98% 77%;        /* #FE8CC5 */
+    --theme-light-pink: 320 100% 95%; /* #FFE4F2 */
+    --theme-dark: 240 100% 6%;        /* #00001F */
+    
+    /* Legacy pub colors updated to match new theme */
+    --pub-amber: 332 98% 77%;         /* Using pink instead */
+    --pub-copper: 295 47% 48%;        /* Using purple instead */
+    --pub-mahogany: 240 100% 6%;      /* Using dark background */
+    --pub-brass: 320 100% 95%;        /* Using light pink */
+    --pub-leather: 240 30% 15%;       /* Dark variant */
+    --pub-foam: 320 100% 95%;         /* Light pink */
+    --pub-gold: 332 98% 77%;          /* Bright pink */
+  }
+
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  /* Mobile-first responsive text utilities */
+  .text-responsive {
+    font-size: 0.875rem;
+  }
+  
+  @screen sm {
+    .text-responsive {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Touch-friendly tap targets */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better mobile line clamping */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  
+  /* Mobile scrolling improvements */
+  .scroll-smooth-mobile {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile-optimized focus states */
+  .mobile-focus:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+    /* New theme color utilities */
+  .bg-theme-purple { background-color: hsl(var(--theme-purple)); }
+  .bg-theme-pink { background-color: hsl(var(--theme-pink)); }
+  .bg-theme-light-pink { background-color: hsl(var(--theme-light-pink)); }
+  .bg-theme-dark { background-color: hsl(var(--theme-dark)); }
+  
+  .text-theme-purple { color: hsl(var(--theme-purple)); }
+  .text-theme-pink { color: hsl(var(--theme-pink)); }
+  .text-theme-light-pink { color: hsl(var(--theme-light-pink)); }
+  .text-theme-dark { color: hsl(var(--theme-dark)); }
+  
+  .border-theme-purple { border-color: hsl(var(--theme-purple)); }
+  .border-theme-pink { border-color: hsl(var(--theme-pink)); }
+  .border-theme-light-pink { border-color: hsl(var(--theme-light-pink)); }
+  
+  /* Updated pub-themed custom utilities with new colors */
+  .bg-pub-amber { background-color: hsl(var(--pub-amber)); }
+  .bg-pub-copper { background-color: hsl(var(--pub-copper)); }
+  .bg-pub-mahogany { background-color: hsl(var(--pub-mahogany)); }
+  .bg-pub-brass { background-color: hsl(var(--pub-brass)); }
+  .bg-pub-leather { background-color: hsl(var(--pub-leather)); }
+  .bg-pub-foam { background-color: hsl(var(--pub-foam)); }
+  .bg-pub-gold { background-color: hsl(var(--pub-gold)); }
+  
+  .text-pub-amber { color: hsl(var(--pub-amber)); }
+  .text-pub-copper { color: hsl(var(--pub-copper)); }
+  .text-pub-mahogany { color: hsl(var(--pub-mahogany)); }
+  .text-pub-brass { color: hsl(var(--pub-brass)); }
+  .text-pub-leather { color: hsl(var(--pub-leather)); }
+  .text-pub-foam { color: hsl(var(--pub-foam)); }
+  .text-pub-gold { color: hsl(var(--pub-gold)); }
+  
+  .border-pub-amber { border-color: hsl(var(--pub-amber)); }
+  .border-pub-copper { border-color: hsl(var(--pub-copper)); }
+  .border-pub-brass { border-color: hsl(var(--pub-brass)); }
+  
+  /* Pub-themed animations */
+  .animate-fizz {
+    animation: fizz 0.6s ease-out;
+  }
+  
+  .animate-pour {
+    animation: pour 1.2s ease-in-out infinite;
+  }
+  
+  .animate-bubble {
+    animation: bubble 3s ease-in-out infinite;
+  }
+  
+  @keyframes glow {
+    from { box-shadow: 0 0 5px hsl(var(--pub-amber)), 0 0 10px hsl(var(--pub-amber)), 0 0 15px hsl(var(--pub-amber)); }
+    to { box-shadow: 0 0 10px hsl(var(--pub-amber)), 0 0 20px hsl(var(--pub-amber)), 0 0 30px hsl(var(--pub-amber)); }
+  }
+  
+  @keyframes fizz {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
+    100% { transform: translateY(-20px) scale(0.9); opacity: 0; }
+  }
+  
+  @keyframes pour {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.1); }
+  }
+  
+  @keyframes bubble {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-5px) scale(1.05); opacity: 1; }
+  }
+  
+  /* Glass morphism effects for pub feel */
+  .glass-effect {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Wood texture effects */
+  .wood-texture {
+    background-image: 
+      linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.1) 50%, transparent 100%),
+      linear-gradient(0deg, rgba(139,69,19,0.1) 0%, transparent 20%, transparent 80%, rgba(139,69,19,0.1) 100%);
+  }
+  
+  /* Metal shine effects */
+  .metal-shine {
+    background: linear-gradient(135deg, 
+      hsl(var(--pub-brass)) 0%, 
+      hsl(var(--pub-gold)) 50%, 
+      hsl(var(--pub-brass)) 100%);
+    position: relative;
+  }
+  
+  .metal-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shine 2s ease-in-out infinite;
+  }
+  
+  @keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+}
