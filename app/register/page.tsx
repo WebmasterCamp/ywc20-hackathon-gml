@@ -16,9 +16,14 @@ import { useAuth } from "@/components/auth/auth-provider";
 const formSchema = z.object({
   username: z
     .string()
-    .min(3, { message: "ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร" })
-    .max(20, { message: "ชื่อผู้ใช้ต้องไม่เกิน 20 ตัวอักษร" }),
-  email: z.string().email({ message: "กรุณากรอกอีเมลที่ถูกต้อง" }),
+    .min(3, { message: "Username must be at least 3 characters" })
+    .max(20, { message: "Username must be less than 20 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 });
 
 export default function RegisterPage() {
@@ -26,42 +31,31 @@ export default function RegisterPage() {
   const { toast } = useToast();
   const { register } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      if (!otpSent) {
-        // Send OTP
-        await register(values.email, values.username, true);
-        setOtpSent(true);
-        toast({
-          title: "ส่งรหัส OTP แล้ว",
-          description: "กรุณาตรวจสอบอีเมลของคุณเพื่อรับรหัส OTP",
-        });
-      } else {
-        // Verify OTP and complete registration
-        await register(values.email, values.username, false, otp);
-        toast({
-          title: "สร้างบัญชีสำเร็จ!",
-          description: "คุณได้ลงทะเบียนเรียบร้อยแล้ว",
-        });
-        router.push("/");
-      }
+      await register(values.email, values.password, values.username);
+      toast({
+        title: "Account created!",
+        description: "You have successfully registered.",
+      });
+      router.push("/");
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "การลงทะเบียนล้มเหลว",
-        description: otpSent ? "รหัส OTP ไม่ถูกต้อง" : "อีเมลนี้อาจถูกใช้งานแล้ว",
+        title: "Registration failed",
+        description: "This email may already be in use.",
       });
     } finally {
       setIsLoading(false);
@@ -72,9 +66,9 @@ export default function RegisterPage() {
     <div className="flex items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">สร้างบัญชี</CardTitle>
+          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>
-            กรอกข้อมูลของคุณเพื่อสร้างบัญชี Bar Hub
+            Enter your details to create your Bar Hub account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -85,9 +79,9 @@ export default function RegisterPage() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>ชื่อผู้ใช้</FormLabel>
+                    <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="ชื่อผู้ใช้ของคุณ" {...field} disabled={otpSent} />
+                      <Input placeholder="coolbarhopper" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -98,39 +92,51 @@ export default function RegisterPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>อีเมล</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="your@email.com" {...field} disabled={otpSent} />
+                      <Input placeholder="your@email.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {otpSent && (
-                <FormItem>
-                  <FormLabel>รหัส OTP</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="กรอกรหัส OTP ที่ได้รับจากอีเมล" 
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading 
-                  ? (otpSent ? "กำลังตรวจสอบ..." : "กำลังส่งรหัส OTP...") 
-                  : (otpSent ? "ยืนยันรหัส OTP" : "ส่งรหัส OTP")}
+                {isLoading ? "Creating account..." : "Register"}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-sm text-center text-muted-foreground">
-            มีบัญชีอยู่แล้ว?{" "}
+            Already have an account?{" "}
             <Link href="/login" className="text-primary underline underline-offset-2">
-              เข้าสู่ระบบ
+              Login
             </Link>
           </div>
         </CardFooter>

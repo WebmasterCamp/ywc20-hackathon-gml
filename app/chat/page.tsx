@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MOCK_MESSAGES, Message } from "@/lib/constants";
 import { PageHeader } from "@/components/layout/page-header";
-import { Card } from "@/components/ui/card";
+import { CarØ } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChatRoom } from "@/components/chat/chat-room";
 import { useAuth } from "@/components/auth/auth-provider";

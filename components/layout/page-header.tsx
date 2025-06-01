@@ -72,7 +72,7 @@ export const PageHeader: FC<PageHeaderProps> = ({ title, description }) => {
         )}
         
         {/* <FeatureHighlights /> */}
-        <DecorativeDivider />
+        {/* <DecorativeDivider /> */}
       </div>
     </div>
   );

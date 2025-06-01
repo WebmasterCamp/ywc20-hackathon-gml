@@ -1,120 +1,170 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MapPin, Users, Star, Beer, Wine, Clock, Sparkles } from "lucide-react";
 import { MOCK_BARS } from "@/lib/constants";
+import { User, MapPin, Wine, Navigation, Users2 } from "lucide-react";
 
 export function BarList() {
+  const router = useRouter();
   const [bars] = useState(MOCK_BARS);
 
-  if (bars.length === 0) {
-    return (
-      <div className="text-center py-10 bg-pub-mahogany/10 rounded-xl border border-pub-brass/20">
-        <div className="flex justify-center mb-4">
-          <div className="relative">
-            <Beer className="h-12 w-12 text-pub-amber" />
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-pub-foam rounded-full animate-fizz"></div>
-          </div>
-        </div>
-        <h3 className="text-lg font-medium text-pub-leather">No bars found</h3>
-        <p className="text-pub-copper mt-1">Try adjusting your filters to discover amazing venues</p>
-      </div>
-    );
-  }
+  // Generate mock male/female counts for each bar
+  const getGenderCounts = (barId: string, activeUsers: number) => {
+    // Use bar ID to generate consistent random seed
+    const seed = parseInt(barId) || 1;
+    const maleRatio = 0.4 + ((seed * 17) % 20) * 0.01; // 40-60% male ratio
+    const maleCount = Math.floor(activeUsers * maleRatio);
+    const femaleCount = activeUsers - maleCount;
+    return { male: maleCount, female: femaleCount };
+  };
+
+  // Generate placeholder image for each bar
+  const getBarImage = (barId: string) => {
+    const imageIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const seed = parseInt(barId) || 1;
+    const imageId = imageIds[seed % imageIds.length];
+    return `https://picsum.photos/seed/bar${imageId}/400/240`;
+  };
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {bars.map((bar) => (
-        <Card key={bar.id} className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.98] sm:active:scale-100 group bg-gradient-to-br from-pub-mahogany/5 to-pub-leather/5 border-pub-brass/30 hover:border-pub-gold/50 relative">
-          {/* Decorative elements */}
-          <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="flex gap-1">
-              <div className="w-1.5 h-1.5 bg-pub-foam rounded-full animate-bubble"></div>
-              <div className="w-1 h-1 bg-pub-foam rounded-full animate-bubble delay-75"></div>
-              <div className="w-1.5 h-1.5 bg-pub-foam rounded-full animate-bubble delay-150"></div>
+    <div className="flex flex-col items-center justify-center w-full px-4 py-8 bg-gradient-to-b from-background to-muted/20">
+      {/* Map Circle UI with modern styling */}
+      <div className="relative w-72 h-72 mb-8 group">
+        {/* Animated Outer Circles with glassmorphism */}
+        <div className="absolute inset-0 rounded-full border-2 border-border/40 bg-background/10 backdrop-blur-sm animate-pulse"></div>
+        <div className="absolute inset-6 rounded-full border-2 border-border/60 bg-background/20 backdrop-blur-sm"></div>
+        <div className="absolute inset-12 rounded-full border-2 border-primary/50 bg-primary/10 backdrop-blur-sm shadow-lg"></div>
+
+        {/* Center user with modern styling */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group">
+          <div className="relative p-4 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-xl border-2 border-primary-foreground/20">
+            <User className="w-8 h-8 text-primary-foreground" fill="currentColor" />
+            <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping"></div>
+          </div>
+        </div>
+
+        {/* Modern Bar markers */}
+        {bars.slice(0, 3).map((bar, i) => {
+          const positions = [
+            { top: "12%", left: "68%" },
+            { top: "68%", left: "78%" },
+            { top: "58%", left: "18%" },
+          ];
+          const genderCounts = getGenderCounts(bar.id, bar.activeUsers);
+
+          return (
+            <div
+              key={bar.id}
+              className="absolute group cursor-pointer transition-all duration-300 hover:scale-110"
+              style={{ ...positions[i] }}
+              onClick={() => router.push(`/bar/${bar.id}`)}
+            >
+              <div className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 border-2 border-white/20">
+                <Wine className="w-6 h-6 text-white" />
+              </div>
+
+              {/* Always visible info box */}
+              <div className="absolute -top-20 left-1/2 -translate-x-1/2 px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-lg shadow-xl whitespace-nowrap min-w-max">
+                <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{bar.name}</p>
+                <div className="flex items-center gap-3 text-xs">
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full bg-blue-600"></div>
+                    <span className="font-medium text-gray-700 dark:text-gray-300">{genderCounts.male}M</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 rounded-full bg-pink-500"></div>
+                    <span className="font-medium text-gray-700 dark:text-gray-300">{genderCounts.female}F</span>
+                  </div>
+                </div>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-200 dark:border-t-gray-600"></div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Modern Bar List */}
+      <div className="w-full max-w-md">
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-600 rounded-2xl shadow-xl overflow-hidden">
+          {/* Header */}
+          <div className="px-6 py-4 border-b-2 border-gray-200 dark:border-gray-600 bg-gradient-to-r from-gray-50 dark:from-gray-700 to-transparent">
+            <div className="flex items-center gap-2">
+              <Navigation className="w-5 h-5 text-primary" />
+              <h2 className="text-gray-900 dark:text-white font-semibold">สถานที่ใกล้เคียง</h2>
+              <span className="ml-auto text-sm text-gray-600 dark:text-gray-400 font-medium">{bars.length} แห่ง</span>
             </div>
           </div>
-          
-          <div className="relative h-40 sm:h-48 overflow-hidden">
-            <Image
-              src={bar.image}
-              alt={bar.name}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-pub-mahogany/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            
-            <div className="absolute top-2 right-2">
-              <Badge className="bg-pub-mahogany/90 hover:bg-pub-mahogany border border-pub-brass/40 text-pub-foam text-xs shadow-lg">
-                <Star className="h-3 w-3 mr-1 fill-pub-gold stroke-pub-gold animate-pulse" />
-                {bar.rating}
-              </Badge>
-            </div>
-            
-            {/* Active users indicator */}
-            <div className="absolute bottom-2 left-2">
-              <Badge className="bg-pub-amber/90 hover:bg-pub-amber border border-pub-gold/40 text-pub-mahogany text-xs">
-                <Users className="h-3 w-3 mr-1 animate-pulse" />
-                {bar.activeUsers}
-              </Badge>
-            </div>
+
+          {/* Bar Items */}
+          <div className="p-4 space-y-4 max-h-80 overflow-y-auto">
+            {bars.map((bar, index) => {
+              const genderCounts = getGenderCounts(bar.id, bar.activeUsers);
+              return (
+                <div
+                  key={bar.id}
+                  className="group relative rounded-xl border-2 border-gray-200 dark:border-gray-600 transition-all duration-300 cursor-pointer hover:shadow-lg bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 hover:border-primary/50 overflow-hidden"
+                  onClick={() => router.push(`/bar/${bar.id}`)}
+                >
+                  {/* Bar Image at Top */}
+                  <div className="relative w-full h-32 overflow-hidden">
+                    <Image
+                      src={getBarImage(bar.id)}
+                      alt={bar.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 400px"
+                    />
+                    {/* Status indicator overlay */}
+                    <div className="absolute top-3 right-3 flex items-center gap-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm">
+                      <div
+                        className={`w-3 h-3 rounded-full transition-colors ${
+                          index % 2 === 0 ? "bg-green-500" : "bg-yellow-500"
+                        }`}
+                      />
+                      <span className="text-xs font-medium text-white">
+                        {index % 2 === 0 ? "เปิด" : "ปิดเร็ว"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content Below Image */}
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors text-base line-clamp-1">
+                        {bar.name}
+                      </h3>
+                    </div>
+                    
+                    <div className="flex items-center gap-1 mb-3 text-gray-600 dark:text-gray-400">
+                      <MapPin className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm line-clamp-1">{bar.location}</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="w-3 h-3 rounded-full bg-blue-600"></div>
+                          <span className="font-medium text-gray-700 dark:text-gray-300">{genderCounts.male} ชาย</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="w-3 h-3 rounded-full bg-pink-500"></div>
+                          <span className="font-medium text-gray-700 dark:text-gray-300">{genderCounts.female} หญิง</span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        {bar.activeUsers} คน
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          
-          <CardContent className="p-3 sm:p-4 relative">
-            {/* Background texture */}
-            <div className="absolute inset-0 bg-wood-texture opacity-5"></div>
-            
-            <div className="relative z-10">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-bold text-base sm:text-lg truncate text-pub-leather group-hover:text-pub-amber transition-colors duration-300">
-                  {bar.name}
-                </h3>
-                <div className="flex gap-1 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                  <Beer className="h-4 w-4 text-pub-amber" />
-                  <Wine className="h-4 w-4 text-pub-copper" />
-                </div>
-              </div>
-              
-              <div className="flex items-center text-pub-copper mt-1 text-xs sm:text-sm">
-                <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 mr-1 flex-shrink-0" />
-                <span className="truncate">{bar.location}</span>
-              </div>
-              
-              <div className="flex items-center justify-between mt-2">
-                <div className="flex items-center text-xs sm:text-sm">
-                  <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5 mr-1 text-pub-copper flex-shrink-0" />
-                  <span className="text-pub-copper">Open now</span>
-                </div>
-                <div className="flex items-center text-xs sm:text-sm">
-                  <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 mr-1 text-pub-gold animate-pulse" />
-                  <span className="text-pub-gold font-medium">Popular</span>
-                </div>
-              </div>
-              
-              <p className="text-xs sm:text-sm mt-2 line-clamp-2 text-pub-leather/80 group-hover:text-pub-leather transition-colors duration-300">
-                {bar.description}
-              </p>
-            </div>
-          </CardContent>
-          
-          <CardFooter className="p-3 sm:p-4 pt-0 flex justify-between relative">
-            <div className="absolute inset-0 bg-wood-texture opacity-5"></div>
-            <Link href={`/bar/${bar.id}`} className="w-full relative z-10">
-              <Button className="w-full h-9 sm:h-10 text-sm bg-pub-amber hover:bg-pub-gold text-pub-mahogany border border-pub-brass/40 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]" variant="outline">
-                <Beer className="h-4 w-4 mr-2" />
-                Explore Venue
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
-      ))}
+        </div>
+      </div>
     </div>
   );
 }

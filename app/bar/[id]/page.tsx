@@ -1,13 +1,36 @@
-import { MOCK_BARS } from "@/lib/constants";
-import { BarDetailClient } from "./bar-detail-client";
+import { notFound } from 'next/navigation';
+import { MOCK_BARS } from '@/lib/constants';
+import UserGridClient from './UserGridClient';
 
-// This function tells Next.js which dynamic paths to pre-render
+interface Bar {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  rating: number;
+  location: string;
+  activeUsers: number;
+  category: string;
+  features: string[];
+}
+
 export async function generateStaticParams() {
   return MOCK_BARS.map((bar) => ({
     id: bar.id,
   }));
 }
 
-export default function BarDetailPage() {
-  return <BarDetailClient />;
+export default async function BarUserGridPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const bar = MOCK_BARS.find((b) => b.id === id);
+
+  if (!bar) {
+    notFound();
+  }
+
+  return (
+    <div className="container px-3 sm:px-4 py-3 sm:py-4 md:py-8 max-w-5xl mx-auto">
+      <UserGridClient bar={bar} />
+    </div>
+  );
 }

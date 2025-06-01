@@ -66,8 +66,14 @@ const config: Config = {
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
+        },        // Custom theme colors based on the new palette
+        theme: {
+          purple: 'hsl(var(--theme-purple))',     // #9F45B0
+          pink: 'hsl(var(--theme-pink))',         // #FE8CC5
+          lightPink: 'hsl(var(--theme-light-pink))', // #FFE4F2
+          dark: 'hsl(var(--theme-dark))',         // #00001F
         },
-        // Custom pub/bar themed colors
+        // Legacy pub colors updated to match new theme
         pub: {
           amber: 'hsl(var(--pub-amber))',
           copper: 'hsl(var(--pub-copper))',
