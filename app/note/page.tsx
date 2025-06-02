@@ -1,14 +1,24 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import { useBarStore } from '@/lib/barStore';
 
 export default function NotePage() {
   const router = useRouter();
   const [message, setMessage] = useState('');
+  const { currentBarId } = useBarStore();
+
+  useEffect(() => {
+    if (!currentBarId) {
+      router.replace('/');
+    }
+  }, [currentBarId, router]);
+
+  if (!currentBarId) return null;
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-background py-8 px-4">
@@ -44,6 +54,7 @@ export default function NotePage() {
       </div>
       {/* Share Button */}
       <Button
+      onClick={() => router.push(`/bar/${currentBarId}`)}
         className="w-full max-w-md py-4 text-xl font-bold rounded-full bg text-white shadow-xl transition"
         style={{ boxShadow: '0 4px 24px 0 #0002' }}
         disabled={!message.trim()}

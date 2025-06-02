@@ -10,7 +10,11 @@ interface BarStore {
 
 export const useBarStore = create<BarStore>((set) => ({
   currentBarId: null,
-  setCurrentBar: (barId) => set({ currentBarId: barId }),
+  setCurrentBar: (barId) => {
+    if (typeof barId === 'string' && barId !== 'null' && barId !== 'undefined' && barId.trim() !== '') {
+      set({ currentBarId: barId });
+    }
+  },
   leaveBar: () => set({ currentBarId: null }),
   isOpen: false,
   setIsOpen: (isOpen) => set({ isOpen }),
