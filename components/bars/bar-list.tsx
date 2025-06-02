@@ -2,7 +2,7 @@
 
 import { MOCK_BARS, MOCK_USERS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Music, Navigation, User, Wine } from "lucide-react";
+import { ExternalLink, Music, Navigation, User, Wine, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
@@ -18,6 +18,7 @@ interface Bar {
     lat: number;
     lng: number;
   };
+  distance?: string;
 }
 
 export function BarList() {
@@ -213,6 +214,13 @@ export function BarList() {
                         <span className="text-xs text-theme-pink font-medium">
                           {bar.genre}
                           <span className="text-muted-foreground"> {bar.todaysBand}</span>
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 mb-1">
+                        <MapPin className="w-3 h-3 text-theme-purple flex-shrink-0" />
+                        <span className="text-xs text-muted-foreground">
+                          {bar.distance || "0.8 กม."}
                         </span>
                       </div>
 

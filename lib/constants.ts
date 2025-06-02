@@ -33,7 +33,7 @@ export const MOCK_BARS: Bar[] = [
     category: "pub",
     features: ["Live Music", "Budget Friendly", "Student Crowd"],
     genre: "อินดี้ป็อป",
-    distance: "0.3 KM",
+    distance: "0.3 กม.",
     todaysBand: "วง The Young Blues",
     isOpen: true,
     coordinates: { lat: 14.046505, lng: 100.595893 }
