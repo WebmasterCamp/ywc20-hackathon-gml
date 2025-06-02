@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Bar, MOCK_USERS, User } from "@/lib/constants";
 import { MapPin, Music, Users } from "lucide-react";
 import Image from "next/image";
@@ -86,7 +85,43 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
   }
 
   return (
-    <div className="bg-background text-foreground flex flex-col">
+    <div className="bg-background text-foreground flex flex-col ">
+
+      <button onClick={() => router.push("/")} className="absolute right-4 top-4 rounded-full flex flex-col items-center z-10">
+        <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center">
+          <svg
+            width={22}
+            height={22}
+            viewBox="0 0 17 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.44909 5.78712C8.79034 5.78712 8.252 5.24171 8.252 4.58296C8.252 4.26547 8.37812 3.96099 8.60262 3.73649C8.82712 3.51199 9.1316 3.38587 9.44909 3.38587C10.1149 3.38587 10.6533 3.92421 10.6533 4.58296C10.6533 5.24171 10.1149 5.78712 9.44909 5.78712ZM7.29575 14.1171L3.09534 13.2813L3.33617 12.0771L6.27575 12.6792L7.232 7.82004L6.15534 8.24504V10.2709H4.95825V7.46587L8.07492 6.14129L8.5495 6.08462C8.9745 6.08462 9.32867 6.32546 9.56242 6.68671L10.1716 7.64296C10.6533 8.50004 11.6095 9.08087 12.7499 9.08087V10.2709C11.4324 10.2709 10.2283 9.68296 9.44909 8.78337L9.09492 10.5825L10.3487 11.7796V16.2917H9.15159V12.6792L7.89075 11.4821L7.29575 14.1171ZM14.8749 16.2917H13.4583V2.12504H4.24992V11.4113L2.83325 11.1138V0.708374H14.8749V16.2917ZM4.24992 16.2917H2.83325V14.0109L4.24992 14.3084V16.2917Z"
+              fill="url(#paint0_linear_44_637)"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear_44_637"
+                x1={-6}
+                y1={-7}
+                x2="16.5"
+                y2={18}
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0.264923" stopColor="white" />
+                <stop offset="0.505011" stopColor="#E780B3" />
+                <stop offset="0.73055" stopColor="#D274A3" />
+                <stop offset={1} stopColor="#985476" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <span className="text-xs text-theme-light-pink">ออก</span>
+      </button>
+
+
       {/* Cover Image Section */}
       <div className="absolute w-full h-[220px] left-0 top-0">
         <Image
@@ -116,15 +151,15 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       </div>
       {/* Feature Tags below cover */}
       <div className="flex flex-wrap gap-2 mb-4">
-          {bar.features?.map((feature) => (
-            <Badge
-              key={feature}
-              className="rounded-full px-3 py-1 bg-background border border-foreground/30 text-foreground text-xs font-medium shadow-sm"
-            >
-              #{feature}
-            </Badge>
-          ))}
-        </div>
+        {bar.features?.map((feature) => (
+          <Badge
+            key={feature}
+            className="rounded-full px-3 py-1 bg-background border border-foreground/30 text-foreground text-xs font-medium shadow-sm"
+          >
+            #{feature}
+          </Badge>
+        ))}
+      </div>
       {/* Stats & Band */}
       <div className="px-4">
         <div className="flex gap-2 w-full">
@@ -200,12 +235,8 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
         </div>
       </div>
 
-      {/* Back to Bars Button */}
-      <div className="mt-8 text-center">
-        <Button variant="outline" onClick={() => router.push("/")}>
-          ← Back to All Bars
-        </Button>
-      </div>
+
+
     </div>
-    );
+  );
 }
