@@ -28,7 +28,7 @@ export default function OtpForm({ email, onSuccess, onBack }: OtpFormProps) {
   const form = useForm<z.infer<typeof otpSchema>>({
     resolver: zodResolver(otpSchema),
     defaultValues: {
-      otp: "",
+      otp: "123456",
     },
   });
 

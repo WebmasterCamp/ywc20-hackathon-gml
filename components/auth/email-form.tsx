@@ -31,7 +31,7 @@ export default function EmailForm({ onSuccess }: EmailFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: "admin@โคจร.ไทย",
     },
   });
 
