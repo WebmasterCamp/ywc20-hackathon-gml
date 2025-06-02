@@ -128,13 +128,13 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
           src="/images/cover/1.png"
           alt="Bar Cover"
           fill
-          className="object-cover w-full h-full rounded-b-3xl"
+          className="object-cover w-full h-full"
           priority
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
 
       <div className="relative w-full h-56 sm:h-64 md:h-72 mb-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/60 to-transparent rounded-b-3xl" />
         {/* Bar Info Overlay */}
         <div className="absolute left-0 right-0 bottom-0 px-4 pb-6 pt-8 flex flex-col items-start z-10">
           <div className="flex items-center gap-2 mb-2">
