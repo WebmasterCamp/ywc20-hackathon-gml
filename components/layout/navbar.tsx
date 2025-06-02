@@ -17,7 +17,7 @@ export function Navbar() {
   // Mobile bottom navigation
   const mobileNav = !isOpen && (
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl flex items-center justify-center">
-      <div className="flex w-full max-w-md mx-auto justify-between items-center px-8 relative">
+      <div className="flex w-full max-w-md mx-auto justify-center gap-[140px] items-center px-8 relative">
         {/* Home */}
         <Link href="/" className={cn(
           "flex flex-col items-center justify-center text-pub-foam hover:text-pub-amber transition-all",
@@ -27,14 +27,15 @@ export function Navbar() {
           <span className="text-xs">Home</span>
         </Link>
         {/* Add Note (only show on /bar/*) */}
-        {pathname.startsWith('/bar/') && (
-          <Link href="/note" className={cn(
-            "flex flex-col items-center justify-center bg-pub-amber text-pub-mahogany rounded-full p-3 shadow-lg -mt-14 border-4 border-pub-mahogany hover:bg-pub-gold transition-all",
-            pathname === "/note" ? "scale-110" : ""
-          )}>
-            <Plus className="h-7 w-7" />
-          </Link>
-        )}
+
+        <Link href="/note" className={cn(
+          pathname.startsWith('/bar/') ? "bg-gray-500" : "bg-gray-900",
+          "flex flex-col items-center justify-center p-3 shadow-lg  transition-all",
+          pathname === "/note" ? "scale-110" : ""
+        )}>
+          <Plus className="h-7 w-7" />
+        </Link>
+
         {/* Me */}
         <Link href="/me" className={cn(
           "flex flex-col items-center justify-center text-pub-foam hover:text-pub-amber transition-all",
