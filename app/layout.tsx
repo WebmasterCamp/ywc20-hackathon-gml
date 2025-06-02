@@ -11,6 +11,11 @@ const baiJamjuree = Bai_Jamjuree({ subsets: ['latin'], weight: ['400', '500', '6
 export const metadata: Metadata = {
   title: 'โคจร | Cojon',
   description: 'หาเพื่อนเข้าบาร์ หาเวลาเข้าร่วม | Friend Finder for Bars',
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
