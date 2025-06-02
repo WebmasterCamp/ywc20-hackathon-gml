@@ -6,6 +6,7 @@ import { ExternalLink, Music, Navigation, User, Wine, MapPin } from "lucide-reac
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
+import { useBarStore } from '@/lib/barStore';
 
 
 
@@ -13,6 +14,7 @@ export function BarList() {
   const router = useRouter();
   const [bars] = useState<Bar[]>(MOCK_BARS);
   const [activeUsersMap, setActiveUsersMap] = useState<Record<string, number>>({});
+  const setCurrentBar = useBarStore((state) => state.setCurrentBar);
 
   // Calculate active users for each bar
   useEffect(() => {
@@ -148,7 +150,12 @@ export function BarList() {
                 <div
                   key={bar.id}
                   className={cn(!bar.isOpen ? "opacity-50" : "cursor-pointer", "group relative rounded-xl border-2 border-border transition-all duration-300  hover:shadow-lg bg-card hover:bg-card/80 hover:border-primary/50 overflow-hidden")}
-                  onClick={() => bar.isOpen && router.push(`/bar/${bar.id}`)}
+                  onClick={() => {
+                    if (bar.isOpen) {
+                      setCurrentBar(bar.id);
+                      router.push(`/bar/${bar.id}`);
+                    }
+                  }}
                 >
                   <div className="flex">
                     <div className="relative w-32 flex-shrink-0">

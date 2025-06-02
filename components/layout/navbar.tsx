@@ -3,6 +3,7 @@
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/config/nav";
+import { useBarStore } from "@/lib/barStore";
 import { cn } from "@/lib/utils";
 import { Beer, Home, Plus, User, Users, Wine } from "lucide-react";
 import Link from "next/link";
@@ -11,9 +12,10 @@ import { usePathname } from "next/navigation";
 export function Navbar() {
   const pathname = usePathname();
   const { user } = useAuth();
+  const isOpen = useBarStore((state) => state.isOpen);
 
   // Mobile bottom navigation
-  const mobileNav = (
+  const mobileNav = !isOpen && (
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl flex items-center justify-center">
       <div className="flex w-full max-w-md mx-auto justify-between items-center px-8 relative">
         {/* Home */}
@@ -24,13 +26,15 @@ export function Navbar() {
           <Home className="h-7 w-7 mb-1" />
           <span className="text-xs">Home</span>
         </Link>
-        {/* Add Note */}
-        <Link href="/note" className={cn(
-          "flex flex-col items-center justify-center bg-pub-amber text-pub-mahogany rounded-full p-3 shadow-lg -mt-14 border-4 border-pub-mahogany hover:bg-pub-gold transition-all",
-          pathname === "/note" ? "scale-110" : ""
-        )}>
-          <Plus className="h-7 w-7" />
-        </Link>
+        {/* Add Note (only show on /bar/*) */}
+        {pathname.startsWith('/bar/') && (
+          <Link href="/note" className={cn(
+            "flex flex-col items-center justify-center bg-pub-amber text-pub-mahogany rounded-full p-3 shadow-lg -mt-14 border-4 border-pub-mahogany hover:bg-pub-gold transition-all",
+            pathname === "/note" ? "scale-110" : ""
+          )}>
+            <Plus className="h-7 w-7" />
+          </Link>
+        )}
         {/* Me */}
         <Link href="/me" className={cn(
           "flex flex-col items-center justify-center text-pub-foam hover:text-pub-amber transition-all",
