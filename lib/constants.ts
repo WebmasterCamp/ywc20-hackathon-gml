@@ -1,5 +1,4 @@
 export interface Bar {
-  activeUsers: number;
   id: string;
   name: string;
   description: string;
@@ -23,7 +22,7 @@ export interface Bar {
   };
 }
 
-export const MOCK_BARS: Bar[] = [ 
+export const MOCK_BARS: Bar[] = [
   {
     id: "1",
     name: "LIV Club Bangkok",
