@@ -27,14 +27,17 @@ export function Navbar() {
           <span className="text-xs">Home</span>
         </Link>
         {/* Add Note (only show on /bar/*) */}
-
-        <Link href="/note" className={cn(
-          pathname.startsWith('/bar/') ? "bg-gray-500" : "bg-gray-900",
-          "flex flex-col items-center justify-center p-3 shadow-lg  transition-all",
-          pathname === "/note" ? "scale-110" : ""
-        )}>
-          <Plus className="h-7 w-7" />
-        </Link>
+        {pathname.startsWith('/bar/') && (
+          <Link
+            href="/note"
+            className={cn(
+              "flex flex-col items-center justify-center -mt-[60px] rounded-full p-3 shadow-xl border-4  bg-gradient-to-tr from-theme-pink via-theme-purple to-theme-light-pink text-white transition-all duration-200 hover:scale-110 active:scale-95",
+              pathname === "/note" ? "ring-4 ring-theme-pink scale-110" : ""
+            )}
+          >
+            <Plus className="h-7 w-7" />
+          </Link>
+        )}
 
         {/* Me */}
         <Link href="/me" className={cn(
