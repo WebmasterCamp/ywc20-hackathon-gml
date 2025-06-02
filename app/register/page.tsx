@@ -10,8 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/components/auth/auth-provider";
+import { Camera } from "lucide-react";
 
 const formSchema = z.object({
   username: z
@@ -19,11 +22,11 @@ const formSchema = z.object({
     .min(3, { message: "Username must be at least 3 characters" })
     .max(20, { message: "Username must be less than 20 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
+  name: z.string().min(1, { message: "Name is required" }),
+  age: z.number().min(18, { message: "Must be at least 18 years old" }).max(100, { message: "Please enter a valid age" }),
+  gender: z.enum(["male", "female"], { message: "Please select a gender" }),
+  career: z.string().min(1, { message: "Career is required" }),
+  description: z.string().min(10, { message: "Description must be at least 10 characters" }),
 });
 
 export default function RegisterPage() {
@@ -31,26 +34,48 @@ export default function RegisterPage() {
   const { toast } = useToast();
   const { register } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       email: "",
-      password: "",
-      confirmPassword: "",
+      name: "",
+      age: undefined,
+      gender: undefined,
+      career: "",
+      description: "",
     },
   });
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await register(values.email, values.password, values.username);
+      await register(values.email, values.username, JSON.stringify({
+        name: values.name,
+        age: values.age,
+        gender: values.gender,
+        career: values.career,
+        description: values.description,
+        profileImage,
+      }));
       toast({
-        title: "Account created!",
-        description: "You have successfully registered.",
+        title: "OTP Sent!",
+        description: "Please check your email for the verification code.",
       });
-      router.push("/");
+      router.push(`/verify-otp?email=${encodeURIComponent(values.email)}`);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -74,6 +99,111 @@ export default function RegisterPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {/* Profile Picture Upload */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 hover:bg-gray-100 cursor-pointer">
+                    {profileImage ? (
+                      <img src={profileImage} alt="Profile" className="w-full h-full object-cover rounded-full" />
+                    ) : (
+                      <Camera className="w-8 h-8 text-gray-400" />
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                </div>
+              </div>
+
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="number" 
+                        {...field} 
+                        onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Please Select"/>
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="career"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Career</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea 
+                        className="resize-none"
+                        rows={3}
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="username"
@@ -81,12 +211,13 @@ export default function RegisterPage() {
                   <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="coolbarhopper" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              
               <FormField
                 control={form.control}
                 name="email"
@@ -94,40 +225,15 @@ export default function RegisterPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="your@email.com" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating account..." : "Register"}
+                {isLoading ? "Sending OTP..." : "Register"}
               </Button>
             </form>
           </Form>
