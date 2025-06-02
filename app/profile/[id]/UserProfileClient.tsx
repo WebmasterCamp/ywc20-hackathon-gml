@@ -51,7 +51,7 @@ export default function UserProfileClient({ user }: { user: User }) {
       {/* Quote */}
       <div className="flex justify-center mb-2">
         <div className="relative bg-white bg-opacity-90 rounded-xl px-6 py-2 text-theme-dark text-base font-semibold shadow-lg border-2 border-theme-pink" style={{ filter: "drop-shadow(0 0 12px #F7B0E0)" }}>
-          <span className="">ต้องการใครสักคนที่เข้าใจ</span>
+          <span >{user.note}</span>
         </div>
       </div>
       {/* Avatar with badge */}
@@ -87,7 +87,7 @@ export default function UserProfileClient({ user }: { user: User }) {
         className="w-full max-w-md mx-auto py-4 text-xl font-bold rounded-full bg-gradient-to-r from-[#F7B0E0] to-[#5B5BFF] text-white shadow-xl hover:from-[#FE8CC5] hover:to-[#9F45B0] transition mt-2 disabled:opacity-50" 
         style={{ boxShadow: '0 4px 24px 0 #0002' }}
       >
-        {isLoading ? 'กำลังรอการตอบรับ...' : 'ขอเป็นเพื่อนก่อนน้า :)'}
+        {isLoading ? 'กำลังรอการตอบรับ...' : 'ส่งคำขอเป็นเพื่อน'}
       </button>
     </div>
   );
