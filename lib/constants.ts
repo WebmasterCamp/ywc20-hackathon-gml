@@ -31,6 +31,7 @@ export const MOCK_BARS: Bar[] = [
     rating: 4.5,
     location: "เอกมัย, กรุงเทพฯ",
     category: "club",
+    distance: "0.3 กม.",
     features: ["Modern Sound System", "LED & Laser Show", "EDM DJs"],
     genre: "EDM",
     todaysBand: "YOUNG T",
@@ -47,6 +48,7 @@ export const MOCK_BARS: Bar[] = [
     category: "club",
     features: ["Festival Vibe", "Multiple Zones", "High Ceiling"],
     genre: "EDM",
+    distance: "1 กม.",
     todaysBand: "DJ SODA",
     isOpen: true,
     coordinates: { lat: 13.735, lng: 100.586 }
@@ -63,6 +65,7 @@ export const MOCK_BARS: Bar[] = [
     genre: "แจ๊ส",
     todaysBand: "-",
     isOpen: true,
+    distance: "5 กม.",
     coordinates: { lat: 13.723, lng: 100.514 }
   }
 ];
