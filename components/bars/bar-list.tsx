@@ -128,7 +128,7 @@ export function BarList() {
 
               {/* Info box */}
               <div className="absolute -top-20 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl bg-card border-2 border-border shadow-xl whitespace-nowrap min-w-max">
-                <p className="text-sm font-semibold text-card-foreground mb-2">{bar.name}</p>
+                <p className="text-sm font-semibold text-card-foreground">{bar.name}</p>
                 <div className="flex items-center gap-3 text-xs">
                   <div className="flex items-center gap-1">
                     <span className="font-medium text-muted-foreground">ชาย</span>

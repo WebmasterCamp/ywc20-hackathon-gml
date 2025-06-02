@@ -38,7 +38,48 @@ export const MOCK_BARS: Bar[] = [
     isOpen: true,
     coordinates: { lat: 14.046505, lng: 100.595893 }
   },
- 
+  {
+    id: "2",
+    name: "LIV Club Bangkok",
+    description: "ผับเปิดใหม่ล่าสุดของย่านเอกมัย พร้อมกับระบบแสงสีเสียงสุดทันสมัย จัดเต็มจอ LED ขนาดยักษ์-เลเซอร์แน่นร้าน พร้อมกับโชว์และไลน์อัพดีเจสุดพิเศษมากมาย ที่พร้อมเสิร์ฟเพลง EDM ตลอดทั้งคืน !!",
+    image: "/images/bar/2",
+    rating: 4.5,
+    location: "เอกมัย, กรุงเทพฯ",
+    category: "club",
+    features: ["Modern Sound System", "LED & Laser Show", "EDM DJs"],
+    genre: "EDM",
+    todaysBand: "YOUNG T",
+    isOpen: true,
+    coordinates: { lat: 13.733, lng: 100.588 }
+  },
+  {
+    id: "3",
+    name: "MUIN Club",
+    description: "MUIN คลับดังจากเกาหลี เปิดสาขาใหม่ที่ทองหล่อ–เอกมัย พร้อมแสงสีเสียงสุดอลังการให้ฟีลเหมือนอยู่ในเฟสติวัล ตั้งอยู่บนชั้น 5 ของ Donki Mall ร้านกว้าง เพดานสูง มีหลายโซนหลายแนวเพลงให้เลือกตามสไตล์คุณ",
+    image: "/images/bar/3",
+    rating: 4.6,
+    location: "ชั้น 5 Donki Mall, ทองหล่อ–เอกมัย, กรุงเทพฯ",
+    category: "club",
+    features: ["Festival Vibe", "Multiple Zones", "High Ceiling"],
+    genre: "EDM",
+    todaysBand: "DJ SODA",
+    isOpen: true,
+    coordinates: { lat: 13.735, lng: 100.586 }
+  },
+  {
+    id: "4",
+    name: "Bamboo Bar",
+    description: "บาร์แจ๊สที่เก่าแก่ที่สุดในประเทศไทย และเป็นหนึ่งในบาร์ของไทยที่ติดอันดับ Asia’s 50 Best Bars ด้วยดนตรีแจ๊สคุณภาพและเอกลักษณ์เฉพาะตัว ผสานบรรยากาศคลาสสิกเข้ากับเครื่องดื่มหลากหลาย ทำให้ที่นี่เป็นจุดหมายยอดนิยมของคนรักแจ๊สมาอย่างยาวนาน",
+    image: "/images/bar/4",
+    rating: 4.8,
+    location: "โรงแรมแมนดาริน โอเรียนเต็ล กรุงเทพฯ",
+    category: "bar",
+    features: ["Classic Jazz", "Historic", "Asia's 50 Best Bars"],
+    genre: "แจ๊ส",
+    todaysBand: "-",
+    isOpen: true,
+    coordinates: { lat: 13.723, lng: 100.514 }
+  }
 ];
 
 export const MOCK_MESSAGES = [
