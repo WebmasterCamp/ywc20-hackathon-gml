@@ -12,18 +12,18 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   {
     href: "/",
-    label: "Home",
+    label: "หน้าหลัก",
     icon: Home,
   },
   {
     href: "/me",
-    label: "Me",
+    label: "โปรไฟล์",
     icon: UserCircle,
     requiresAuth: true,
   },
   {
     href: "/login",
-    label: "Login",
+    label: "เข้าสู่ระบบ",
     icon: LogIn,
     hideWhenAuth: true,
   },
