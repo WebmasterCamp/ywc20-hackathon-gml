@@ -165,30 +165,6 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
         </div>
       </Card>
 
-      {/* Stats */}
-      {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-        <Card className="p-4 text-center">
-          <Users className="h-6 w-6 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold">{filteredUsers.length}</div>
-          <div className="text-sm text-muted-foreground">Available</div>
-        </Card>
-        <Card className="p-4 text-center">
-          <UserCircle className="h-6 w-6 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold">{bar.activeUsers}</div>
-          <div className="text-sm text-muted-foreground">At Bar Now</div>
-        </Card>
-        <Card className="p-4 text-center">
-          <Coffee className="h-6 w-6 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold">{bar.category}</div>
-          <div className="text-sm text-muted-foreground">Category</div>
-        </Card>
-        <Card className="p-4 text-center">
-          <Star className="h-6 w-6 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold">{bar.rating}</div>
-          <div className="text-sm text-muted-foreground">Rating</div>
-        </Card>
-      </div> */}
-
       {/* User Grid */}
       {filteredUsers.length === 0 ? (
         <Card className="p-8 text-center">
