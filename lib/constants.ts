@@ -109,6 +109,7 @@ export interface User {
   password?: string; // Optional for when storing in state (will be removed)
   avatar?: string;
   bio?: string;
+  note?: string; // User's current status or note
   favoriteBarIds: string[];
   currentBarId?: string; // ID of the bar where user is currently at
   joinDate: string;
@@ -140,8 +141,9 @@ export const MOCK_USERS: User[] = [
     password: "adminadmin",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "System Administrator",
+    note: "กำลังมองหาเพื่อนดื่ม",
     favoriteBarIds: [],
-    currentBarId: "1", // Currently at bar 1
+    currentBarId: "1",
     joinDate: "2023-01-01T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "bar", "club", "bistro"],
@@ -155,8 +157,9 @@ export const MOCK_USERS: User[] = [
     password: "adminadmin",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "System Administrator",
+    note: "รอเพื่อนอยู่",
     favoriteBarIds: [],
-    currentBarId: "1", // Currently at bar 1
+    currentBarId: "1",
     joinDate: "2023-01-01T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "bar", "club", "bistro"],
@@ -170,8 +173,9 @@ export const MOCK_USERS: User[] = [
     password: "test1234",
     avatar: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Love live music and craft cocktails",
+    note: "กำลังฟังดนตรีสด",
     favoriteBarIds: ["1", "4"],
-    currentBarId: "1", // Currently at bar 1
+    currentBarId: "1",
     joinDate: "2023-11-15T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "club"],
@@ -185,8 +189,9 @@ export const MOCK_USERS: User[] = [
     password: "password123",
     avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Cocktail enthusiast and food lover",
+    note: "กำลังชิมค็อกเทลใหม่",
     favoriteBarIds: ["2", "6"],
-    currentBarId: "2", // Currently at bar 2
+    currentBarId: "2",
     joinDate: "2023-12-03T00:00:00Z",
     preferences: {
       favoriteCategories: ["bistro", "bar"],
@@ -200,8 +205,9 @@ export const MOCK_USERS: User[] = [
     password: "mike123",
     avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Pool player and party lover",
+    note: "กำลังเล่นพูล",
     favoriteBarIds: ["3"],
-    currentBarId: "3", // Currently at bar 3
+    currentBarId: "3",
     joinDate: "2023-10-20T00:00:00Z",
     preferences: {
       favoriteCategories: ["club", "pub"],
@@ -215,8 +221,9 @@ export const MOCK_USERS: User[] = [
     password: "emma456",
     avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Casual drinker who enjoys good atmosphere",
+    note: "กำลังนั่งชิลล์",
     favoriteBarIds: ["2", "5"],
-    currentBarId: "2", // Currently at bar 2
+    currentBarId: "2",
     joinDate: "2023-09-12T00:00:00Z",
     preferences: {
       favoriteCategories: ["bar", "bistro"],
@@ -230,8 +237,9 @@ export const MOCK_USERS: User[] = [
     password: "david789",
     avatar: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Funk music lover and beer connoisseur",
+    note: "กำลังฟังดนตรีสด",
     favoriteBarIds: ["4"],
-    currentBarId: "4", // Currently at bar 4
+    currentBarId: "4",
     joinDate: "2023-08-25T00:00:00Z",
     preferences: {
       favoriteCategories: ["bar"],
@@ -245,8 +253,9 @@ export const MOCK_USERS: User[] = [
     password: "lisa321",
     avatar: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Student who loves chill spots",
+    note: "กำลังรอเพื่อน",
     favoriteBarIds: ["5", "6"],
-    currentBarId: "5", // Currently at bar 5
+    currentBarId: "5",
     joinDate: "2023-07-18T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "bistro"],

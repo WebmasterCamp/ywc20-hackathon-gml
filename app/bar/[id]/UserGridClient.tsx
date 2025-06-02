@@ -163,8 +163,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       {/* Stats & Band */}
       <div className="px-4">
         <div className="flex gap-2 w-full">
-          {/* TODO: background gradient */}
-          <div className="  flex-1 flex flex-col items-center justify-center bg-white rounded-xl p-3 border border-border">
+          <div className="  flex-1 flex flex-col items-center justify-center bg-muted rounded-xl p-3 border border-border">
             <div className="flex items-center gap-2 mb-1">
               <Users className="w-6 h-6 mb-1 text-foreground" />
               <div className="text-2xl font-bold leading-none">{filteredUsers.length}</div>
@@ -208,10 +207,11 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
               />
               {/* User Info */}
               <div className="flex-1 min-w-0">
-                <div className="mb-1">
-                  <span className="inline-block bg-muted text-muted-foreground text-xs px-2 py-0.5 rounded-full mb-1">
-                    ต้องการใครสักคนที่เข้าใจ
-                  </span>
+                <div className="mb-1 relative">
+                  <div className="inline-block bg-muted text-muted-foreground text-xs px-3 py-1.5 rounded-lg relative">
+                    {user.note || "ต้องการใครสักคนที่เข้าใจ"}
+                    <div className="absolute -bottom-1 left-0 w-3 h-3 bg-muted transform rotate-[80deg]"></div>
+                  </div>
                 </div>
                 <div className="font-semibold text-sm leading-tight truncate">
                   {user.username}
