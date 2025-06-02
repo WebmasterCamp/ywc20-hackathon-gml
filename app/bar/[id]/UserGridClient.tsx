@@ -1,37 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { Users, Star, MessageSquare, UserPlus, Search, CalendarDays, Coffee, UserCircle, MapPin, Music } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MOCK_USERS, User } from "@/lib/constants";
 import { useAuth } from "@/components/auth/auth-provider";
-import { formatDistanceToNow } from "date-fns";
-import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Bar, MOCK_USERS, User } from "@/lib/constants";
+import { MapPin, Music, Users } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-interface Bar {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  rating: number;
-  location: string;
-  activeUsers: number;
-  category: string;
-  features: string[];
-  distance?: string;
-  band?: {
-    name: string;
-    description: string;
-    image: string;
-  };
-}
 
 interface UserGridClientProps {
   bar: Bar;
@@ -51,7 +28,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
     setLoading(true);
     setTimeout(() => {
       // Find users who like similar bar categories and are available to join
-      const similarUsers = MOCK_USERS.filter(u => 
+      const similarUsers = MOCK_USERS.filter(u =>
         u.id !== user?.id && // Exclude current user
         u.preferences?.favoriteCategories?.includes(bar.category) // Similar interests
       );
@@ -63,7 +40,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
 
   // Filter and sort users
   useEffect(() => {
-    let filtered = availableUsers.filter(u => 
+    let filtered = availableUsers.filter(u =>
       u.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
       u.bio?.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -109,23 +86,35 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
 
   return (
     <div className="bg-background text-foreground flex flex-col">
-      {/* Header */}
-      <div className="bg-card px-4 pt-6 pb-4 rounded-b-3xl shadow-md">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold leading-tight">{bar.name}</h1>
-            <span className="flex items-center text-sm text-muted-foreground ml-2">
-              <MapPin className="w-4 h-4 mr-1" />
+      {/* Cover Image Section */}
+      <div className="absolute w-full h-[220px] left-0 top-0">
+        <Image
+          src="/images/cover/1.png"
+          alt="Bar Cover"
+          fill
+          className="object-cover w-full h-full rounded-b-3xl"
+          priority
+        />
+      </div>
+
+      <div className="relative w-full h-56 sm:h-64 md:h-72 mb-0">
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/60 to-transparent rounded-b-3xl" />
+        {/* Bar Info Overlay */}
+        <div className="absolute left-0 right-0 bottom-0 px-4 pb-6 pt-8 flex flex-col items-start z-10">
+          <div className="flex items-center gap-2 mb-2">
+            <h1 className="text-3xl font-bold leading-tight text-theme-light-pink drop-shadow-lg">{bar.name}</h1>
+            <span className="flex items-center text-lg text-theme-light-pink ml-2 drop-shadow-lg">
+              <MapPin className="w-5 h-5 mr-1" />
               {bar.distance || "0.8 กม."}
             </span>
           </div>
-          {/* Placeholder for logout/profile */}
+          <p className="text-base text-theme-light-pink mb-3 drop-shadow-lg">
+            {bar.description || "Lorem ipsum dolor amet consectetur. Lacus leo gravida."}
+          </p>
         </div>
-        <p className="text-sm text-muted-foreground mb-3">
-          {bar.description || "Lorem ipsum dolor amet consectetur. Lacus leo gravida."}
-        </p>
-        {/* Feature Tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
+      </div>
+      {/* Feature Tags below cover */}
+      <div className="flex flex-wrap gap-2 mb-4">
           {bar.features?.map((feature) => (
             <Badge
               key={feature}
@@ -135,7 +124,8 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
             </Badge>
           ))}
         </div>
-        {/* Stats & Band */}
+      {/* Stats & Band */}
+      <div className="px-4">
         <div className="flex gap-2 w-full">
           <div className="flex-1 flex flex-col items-center justify-center bg-muted rounded-xl p-3 border border-border">
             <div className="flex items-center gap-2 mb-1">
