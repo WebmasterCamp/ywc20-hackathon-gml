@@ -57,18 +57,12 @@ export function Navbar() {
 
       <div className="p-6 relative z-10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="relative">
-            <Beer className="h-8 w-8 text-pub-amber" />
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-pub-foam rounded-full"></div>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-pub-gold to-pub-amber bg-clip-text text-transparent drop-shadow-lg">
-              Bar Hub
-            </h1>
-            <div className="flex items-center gap-1">
-              <Users className="h-3 w-3 text-pub-copper" />
-              <p className="text-pub-foam text-sm font-medium">Find your crowd</p>
-            </div>
+          <div className="flex-shrink-0 flex">
+            <img
+              src="/cojon.png"
+              alt="Pub Logo"
+              className="w-40 h-36"
+            />
           </div>
         </div>
 

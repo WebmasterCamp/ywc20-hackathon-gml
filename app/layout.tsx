@@ -24,10 +24,12 @@ export default function RootLayout({
         <AuthProvider>
           <ThemeProvider>
             <div className="flex flex-col min-h-screen">
-              <main className="flex-1 pb-20 md:pb-4 md:pl-[250px] min-h-screen">
+              <main className="flex-1 pb-20 md:pb-4 md:pl-[250px] max-h-screen">
                 {children}
               </main>
-              <Navbar />
+              <div className="fixed bottom-0 left-0 right-0 z-50 md:static">
+                <Navbar />
+              </div>
             </div>
             <Toaster />
           </ThemeProvider>
