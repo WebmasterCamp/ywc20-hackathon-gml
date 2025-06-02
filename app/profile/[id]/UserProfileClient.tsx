@@ -2,11 +2,14 @@
 import { User } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/auth-provider";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function UserProfileClient({ user }: { user: User }) {
   const router = useRouter();
   const { user: currentUser } = useAuth();
+  const [isWaiting, setIsWaiting] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleJoinChat = () => {
     if (!currentUser) {
@@ -14,9 +17,24 @@ export default function UserProfileClient({ user }: { user: User }) {
       return;
     }
 
-    // Navigate to personal chat with this user
-    router.push(`/chat/${user.id}`);
+    setIsWaiting(true);
+    
+    // Show notification after 2.5 seconds, then navigate
+    setTimeout(() => {
+      setShowNotification(true);
+      setTimeout(() => {
+        router.push(`/chat/${user.id}`);
+      }, 1000);
+    }, 2500);
   };
+
+  // Hide notification when component unmounts
+  useEffect(() => {
+    return () => {
+      setShowNotification(false);
+    };
+  }, []);
+
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -54,9 +72,9 @@ export default function UserProfileClient({ user }: { user: User }) {
           <div>อาชีพ <span className="font-medium">นักศึกษา</span></div>
         </div>
         <div className="flex gap-3 w-full mb-4">
-          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">ความชอบ 1</button>
-          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">ความชอบ 2</button>
-          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">ความชอบ 3</button>
+          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">#ความชอบ 1</button>
+          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">#ความชอบ 2</button>
+          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">#ความชอบ 3</button>
         </div>
         <div className="text-center text-muted-foreground text-base mb-2">
           {user.bio || "-"}
@@ -76,11 +94,28 @@ export default function UserProfileClient({ user }: { user: User }) {
         <Image src="/badges/receiving.png" alt="Receiving Gifts" width={90} height={90} />
       </div>
       <button
-        className="w-full max-w-md bg-foreground text-background rounded-full py-4 text-xl font-bold shadow-lg hover:bg-theme-pink transition"
+        className={`w-full max-w-md rounded-full py-4 text-xl font-bold shadow-lg transition ${
+          isWaiting 
+        ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+        : 'bg-foreground text-background hover:bg-theme-pink'
+        }`}
         onClick={handleJoinChat}
+        disabled={isWaiting}
       >
-        จอยกัน !
+        {isWaiting ? 'กำลังรอการตอบรับ' : 'จอยกัน !'}
       </button>
+
+      {/* Notification */}
+      {showNotification && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-in slide-in-from-top-2">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="font-medium">คำขอถูกตอบรับแล้ว!</span>
+          </div>
+        </div>
+      )}
     </div>
   );
-} 
+}
