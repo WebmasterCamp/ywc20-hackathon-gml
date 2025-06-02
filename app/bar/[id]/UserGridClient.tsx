@@ -208,9 +208,13 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
               {/* User Info */}
               <div className="flex-1 min-w-0">
                 <div className="mb-1 relative">
-                  <div className="inline-block bg-muted text-muted-foreground text-xs px-3 py-1.5 rounded-lg relative">
+                  <div className="inline-block bg-muted text-muted-foreground text-xs px-3 py-1.5 rounded-2xl relative">
                     {user.note || "ต้องการใครสักคนที่เข้าใจ"}
-                    <div className="absolute -bottom-1 left-0 w-3 h-3 bg-muted transform rotate-[80deg]"></div>
+                    <div className="w-[9px] h-[9px] rounded-full bg-theme-pink/40 absolute bottom-0 left-0">
+                    </div>
+                    <div className="w-[4px] h-[4px] rounded-full bg-theme-pink/40 absolute -bottom-1 -left-1">
+                    </div>
+               
                   </div>
                 </div>
                 <div className="font-semibold text-sm leading-tight truncate">

@@ -197,15 +197,21 @@ export function BarList() {
                         <h3 className="font-semibold text-card-foreground group-hover:text-primary transition-colors text-sm line-clamp-1">
                           {bar.name}
                         </h3>
-                        {/* Google Maps Button */}
-                        <button
-                          onClick={(e) => openGoogleMaps(bar, e)}
-                          className="flex items-center gap-1 px-2 py-0.5 text-xs bg-theme-purple/10 hover:bg-theme-purple/20 text-theme-purple rounded-md transition-colors"
-                          title="เปิดใน Google Maps"
-                        >
-                          <ExternalLink className="w-3 h-3" />
-                          แผนที่
-                        </button>
+                        {/* Google Maps Button with Distance */}
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-muted-foreground flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-theme-purple" />
+                            {bar.distance || "0.8 กม."}
+                          </span>
+                          <button
+                            onClick={(e) => openGoogleMaps(bar, e)}
+                            className="flex items-center gap-1 px-2 py-0.5 text-xs bg-theme-purple/10 hover:bg-theme-purple/20 text-theme-purple rounded-md transition-colors"
+                            title="เปิดใน Google Maps"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            แผนที่
+                          </button>
+                        </div>
                       </div>
 
                       {/* Genre */}
@@ -214,13 +220,6 @@ export function BarList() {
                         <span className="text-xs text-theme-pink font-medium">
                           {bar.genre}
                           <span className="text-muted-foreground"> {bar.todaysBand}</span>
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2 mb-1">
-                        <MapPin className="w-3 h-3 text-theme-purple flex-shrink-0" />
-                        <span className="text-xs text-muted-foreground">
-                          {bar.distance || "0.8 กม."}
                         </span>
                       </div>
 
