@@ -127,7 +127,8 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       {/* Stats & Band */}
       <div className="px-4">
         <div className="flex gap-2 w-full">
-          <div className="flex-1 flex flex-col items-center justify-center bg-muted rounded-xl p-3 border border-border">
+          {/* TODO: background gradient */}
+          <div className="  flex-1 flex flex-col items-center justify-center bg-white rounded-xl p-3 border border-border">
             <div className="flex items-center gap-2 mb-1">
               <Users className="w-6 h-6 mb-1 text-foreground" />
               <div className="text-2xl font-bold leading-none">{bar.activeUsers}</div>
