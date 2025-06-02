@@ -1,4 +1,5 @@
 export interface Bar {
+  activeUsers: number;
   id: string;
   name: string;
   description: string;
