@@ -1,18 +1,7 @@
-import { notFound } from 'next/navigation';
 import { MOCK_BARS } from '@/lib/constants';
+import { notFound } from 'next/navigation';
 import UserGridClient from './UserGridClient';
 
-interface Bar {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  rating: number;
-  location: string;
-  activeUsers: number;
-  category: string;
-  features: string[];
-}
 
 export async function generateStaticParams() {
   return MOCK_BARS.map((bar) => ({
