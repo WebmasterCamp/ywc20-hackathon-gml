@@ -21,14 +21,14 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "alphabetical">("newest");
-  const [loading, setLoading] = useState(true);
+
 
   // Determine if bar is out of range
   const isOutOfRange = parseFloat((bar.distance || '').replace(/[^\d.]/g, '')) > 1;
 
   useEffect(() => {
     // Simulate loading data
-    setLoading(true);
+
     setTimeout(() => {
       // Find users who are currently at this bar and have similar interests
       const similarUsers = MOCK_USERS.filter(u =>
@@ -38,7 +38,6 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       );
       setAvailableUsers(similarUsers);
       setFilteredUsers(similarUsers);
-      setLoading(false);
     }, 500);
   }, [bar.category, bar.id, user?.id]);
 
@@ -76,17 +75,8 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
     alert(`Opening chat with ${targetUser.username}...`);
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh] sm:h-[70vh]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <h2 className="text-lg sm:text-xl font-semibold mb-2">Loading users...</h2>
-          <p className="text-sm sm:text-base text-muted-foreground">Please wait</p>
-        </div>
-      </div>
-    );
-  }
+
+  
 
   return (
     <div className="bg-background text-foreground flex flex-col ">
@@ -225,7 +215,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
                     </div>
                     <div className="w-[4px] h-[4px] rounded-full bg-theme-pink/40 absolute -bottom-1 -left-1">
                     </div>
-               
+
                   </div>
                 </div>
                 <div className="font-semibold text-sm leading-tight truncate">
