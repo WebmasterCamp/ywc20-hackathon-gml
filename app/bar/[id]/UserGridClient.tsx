@@ -86,7 +86,6 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
 
   return (
     <div className="bg-background text-foreground flex flex-col ">
-
       <button onClick={() => router.push("/")} className="absolute right-4 top-4 rounded-full flex flex-col items-center z-10">
         <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center">
           <svg
@@ -189,7 +188,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       </div>
 
       {/* User List */}
-      <div className="flex-1 bg-muted/40 px-0 pt-4 pb-8 overflow-y-auto">
+      <div className="flex-1 h-full px-0 pt-4 pb-8 overflow-y-auto">
         <div className="flex flex-col gap-4 max-w-lg mx-auto">
           {filteredUsers.map((user) => (
             <div
@@ -208,9 +207,13 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
               {/* User Info */}
               <div className="flex-1 min-w-0">
                 <div className="mb-1 relative">
-                  <div className="inline-block bg-muted text-muted-foreground text-xs px-3 py-1.5 rounded-lg relative">
+                  <div className="inline-block bg-muted text-muted-foreground text-xs px-3 py-1.5 rounded-2xl relative">
                     {user.note || "ต้องการใครสักคนที่เข้าใจ"}
-                    <div className="absolute -bottom-1 left-0 w-3 h-3 bg-muted transform rotate-[80deg]"></div>
+                    <div className="w-[9px] h-[9px] rounded-full bg-theme-pink/40 absolute bottom-0 left-0">
+                    </div>
+                    <div className="w-[4px] h-[4px] rounded-full bg-theme-pink/40 absolute -bottom-1 -left-1">
+                    </div>
+               
                   </div>
                 </div>
                 <div className="font-semibold text-sm leading-tight truncate">

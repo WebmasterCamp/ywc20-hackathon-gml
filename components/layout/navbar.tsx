@@ -3,7 +3,7 @@
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Beer, Home, LogIn, MessageSquare, UserCircle, Users, Wine } from "lucide-react";
+import { Beer, Home, LogIn, UserCircle, Users, Wine } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -23,12 +23,6 @@ export function Navbar() {
         <div className="absolute inset-0 bg-gradient-to-t from-pub-mahogany/50 to-transparent"></div>
 
         <NavButton href="/" icon={<Home className="h-5 w-5" />} label="Home" active={pathname === "/"} />
-        <NavButton
-          href={user ? "/chat" : "/login"}
-          icon={<MessageSquare className="h-5 w-5" />}
-          label="Chat"
-          active={pathname === "/chat"}
-        />
         <NavButton
           href={user ? "/me" : "/login"}
           icon={user ? <UserCircle className="h-5 w-5" /> : <LogIn className="h-5 w-5" />}
@@ -74,12 +68,6 @@ export function Navbar() {
 
       <div className="px-3 py-2 relative z-10">
         <SidebarNavButton href="/" icon={<Home className="h-5 w-5 mr-2" />} label="Home" active={pathname === "/"} />
-        <SidebarNavButton
-          href={user ? "/chat" : "/login"}
-          icon={<MessageSquare className="h-5 w-5 mr-2" />}
-          label="Chat"
-          active={pathname === "/chat"}
-        />
         <SidebarNavButton
           href={user ? "/me" : "/login"}
           icon={user ? <UserCircle className="h-5 w-5 mr-2" /> : <LogIn className="h-5 w-5 mr-2" />}
