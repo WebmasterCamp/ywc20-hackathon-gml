@@ -287,5 +287,67 @@ export const MOCK_USERS: User[] = [
       favoriteCategories: ["pub", "bistro"],
       notifications: true
     }
-  }
+  },
+  // --- MOCKUP USERS: 20 male, 40 female, random bar assignment ---
+  ...Array.from({ length: 20 }, (_, i) => ({
+    id: `mock-male-${i+1}`,
+    username: `ชาย${i+1}`,
+    email: `male${i+1}@mock.com`,
+    avatar: `https://randomuser.me/api/portraits/men/${i+10}.jpg`,
+    bio: "หนุ่มสายชิลล์",
+    note: "กำลังหาเพื่อนใหม่",
+    favoriteBarIds: [],
+    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+    joinDate: `2024-01-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+    preferences: {
+      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+      notifications: Math.random() > 0.5
+    }
+  })),
+  ...Array.from({ length: 40 }, (_, i) => ({
+    id: `mock-female-${i+1}`,
+    username: `หญิง${i+1}`,
+    email: `female${i+1}@mock.com`,
+    avatar: `https://randomuser.me/api/portraits/women/${i+10}.jpg`,
+    bio: "สาวสายปาร์ตี้",
+    note: "กำลังรอแก๊งค์",
+    favoriteBarIds: [],
+    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+    joinDate: `2024-02-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+    preferences: {
+      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+      notifications: Math.random() > 0.5
+    }
+  })),
+  // --- MOCKUP USERS: 80 more, 40 male, 40 female, random bar assignment ---
+  ...Array.from({ length: 40 }, (_, i) => ({
+    id: `mock-male-extra-${i+1}`,
+    username: `ชาย${i+21}`,
+    email: `male-extra${i+1}@mock.com`,
+    avatar: `https://randomuser.me/api/portraits/men/${i+31}.jpg`,
+    bio: "หนุ่มสายชิลล์",
+    note: "กำลังหาเพื่อนใหม่",
+    favoriteBarIds: [],
+    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+    joinDate: `2024-03-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+    preferences: {
+      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+      notifications: Math.random() > 0.5
+    }
+  })),
+  ...Array.from({ length: 40 }, (_, i) => ({
+    id: `mock-female-extra-${i+1}`,
+    username: `หญิง${i+41}`,
+    email: `female-extra${i+1}@mock.com`,
+    avatar: `https://randomuser.me/api/portraits/women/${i+51}.jpg`,
+    bio: "สาวสายปาร์ตี้",
+    note: "กำลังรอแก๊งค์",
+    favoriteBarIds: [],
+    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+    joinDate: `2024-04-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+    preferences: {
+      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+      notifications: Math.random() > 0.5
+    }
+  }))
 ];
