@@ -1,25 +1,13 @@
 "use client";
 
-import { MOCK_BARS, MOCK_USERS } from "@/lib/constants";
+import { Bar, MOCK_BARS, MOCK_USERS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Music, Navigation, User, Wine, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
 
-interface Bar {
-  id: string;
-  name: string;
-  location: string;
-  genre: string;
-  todaysBand: string;
-  isOpen: boolean;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
-  distance?: string;
-}
+
 
 export function BarList() {
   const router = useRouter();
@@ -82,13 +70,6 @@ export function BarList() {
     window.open(mapsUrl, '_blank');
   };
 
-  // Generate placeholder image for each bar
-  const getBarImage = (barId: string) => {
-    const imageIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const seed = parseInt(barId) || 1;
-    const imageId = imageIds[seed % imageIds.length];
-    return `https://picsum.photos/seed/bar${imageId}/400/240`;
-  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full px-4 py-8 bg-gradient-to-b from-background to-muted/20">
@@ -173,7 +154,7 @@ export function BarList() {
                     <div className="relative w-32 flex-shrink-0">
                       <Image
                         priority
-                        src={getBarImage(bar.id)}
+                        src={bar.image}
                         alt={bar.name}
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"

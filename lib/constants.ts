@@ -1,5 +1,4 @@
 export interface Bar {
-  activeUsers: number;
   id: string;
   name: string;
   description: string;
@@ -25,27 +24,10 @@ export interface Bar {
 
 export const MOCK_BARS: Bar[] = [
   {
-    activeUsers: 0,
     id: "1",
-    name: "ร้าน(อ)โคจร",
-    description: "บาร์ดนตรีสดใกล้ ม.กรุงเทพ รังสิต บรรยากาศสนุก ดนตรีมันส์ ราคาเข้าถึงง่าย",
-    image: "/images/bar/1",
-    rating: 4.3,
-    location: "95/1 ซอยไอยราแกรนด์ คลองหนึ่ง คลองหลวง ปทุมธานี",
-    category: "pub",
-    features: ["Live Music", "Budget Friendly", "Student Crowd"],
-    genre: "อินดี้ป็อป",
-    distance: "0.3 กม.",
-    todaysBand: "วง The Young Blues",
-    isOpen: true,
-    coordinates: { lat: 14.046505, lng: 100.595893 }
-  },
-  {
-    activeUsers: 0,
-    id: "2",
     name: "LIV Club Bangkok",
     description: "ผับเปิดใหม่ล่าสุดของย่านเอกมัย พร้อมกับระบบแสงสีเสียงสุดทันสมัย จัดเต็มจอ LED ขนาดยักษ์-เลเซอร์แน่นร้าน พร้อมกับโชว์และไลน์อัพดีเจสุดพิเศษมากมาย ที่พร้อมเสิร์ฟเพลง EDM ตลอดทั้งคืน !!",
-    image: "/images/bar/2",
+    image: "/images/cover/2.png",
     rating: 4.5,
     location: "เอกมัย, กรุงเทพฯ",
     category: "club",
@@ -56,11 +38,10 @@ export const MOCK_BARS: Bar[] = [
     coordinates: { lat: 13.733, lng: 100.588 }
   },
   {
-    activeUsers: 0,
-    id: "3",
+    id: "2",
     name: "MUIN Club",
     description: "MUIN คลับดังจากเกาหลี เปิดสาขาใหม่ที่ทองหล่อ–เอกมัย พร้อมแสงสีเสียงสุดอลังการให้ฟีลเหมือนอยู่ในเฟสติวัล ตั้งอยู่บนชั้น 5 ของ Donki Mall ร้านกว้าง เพดานสูง มีหลายโซนหลายแนวเพลงให้เลือกตามสไตล์คุณ",
-    image: "/images/bar/3",
+    image: "/images/cover/3.png",
     rating: 4.6,
     location: "ชั้น 5 Donki Mall, ทองหล่อ–เอกมัย, กรุงเทพฯ",
     category: "club",
@@ -71,11 +52,10 @@ export const MOCK_BARS: Bar[] = [
     coordinates: { lat: 13.735, lng: 100.586 }
   },
   {
-    activeUsers: 0,
-    id: "4",
+    id: "3",
     name: "Bamboo Bar",
     description: "บาร์แจ๊สที่เก่าแก่ที่สุดในประเทศไทย และเป็นหนึ่งในบาร์ของไทยที่ติดอันดับ Asia’s 50 Best Bars ด้วยดนตรีแจ๊สคุณภาพและเอกลักษณ์เฉพาะตัว ผสานบรรยากาศคลาสสิกเข้ากับเครื่องดื่มหลากหลาย ทำให้ที่นี่เป็นจุดหมายยอดนิยมของคนรักแจ๊สมาอย่างยาวนาน",
-    image: "/images/bar/4",
+    image: "/images/cover/4.png",
     rating: 4.8,
     location: "โรงแรมแมนดาริน โอเรียนเต็ล กรุงเทพฯ",
     category: "bar",
