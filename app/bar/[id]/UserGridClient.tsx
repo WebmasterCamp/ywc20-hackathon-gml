@@ -86,7 +86,6 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
 
   return (
     <div className="bg-background text-foreground flex flex-col ">
-
       <button onClick={() => router.push("/")} className="absolute right-4 top-4 rounded-full flex flex-col items-center z-10">
         <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center">
           <svg
@@ -189,7 +188,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       </div>
 
       {/* User List */}
-      <div className="flex-1 bg-muted/40 px-0 pt-4 pb-8 overflow-y-auto">
+      <div className="flex-1 h-full px-0 pt-4 pb-8 overflow-y-auto">
         <div className="flex flex-col gap-4 max-w-lg mx-auto">
           {filteredUsers.map((user) => (
             <div
