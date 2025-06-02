@@ -31,10 +31,10 @@ export function Navbar() {
           active={pathname === "/chat"} 
         />
         <NavButton 
-          href={user ? "/profile" : "/login"} 
+          href={user ? "/me" : "/login"} 
           icon={user ? <UserCircle className="h-5 w-5" /> : <LogIn className="h-5 w-5" />} 
-          label={user ? "Profile" : "Login"} 
-          active={pathname === "/profile" || pathname === "/login"} 
+          label={user ? "Me" : "Login"} 
+          active={pathname === "/me" || pathname === "/login"} 
         />
       </div>
     </div>
@@ -83,10 +83,10 @@ export function Navbar() {
           active={pathname === "/chat"}
         />
         <SidebarNavButton 
-          href={user ? "/profile" : "/login"} 
+          href={user ? "/me" : "/login"} 
           icon={user ? <UserCircle className="h-5 w-5 mr-2" /> : <LogIn className="h-5 w-5 mr-2" />}
-          label={user ? "Profile" : "Login"} 
-          active={pathname === "/profile" || pathname === "/login"} 
+          label={user ? "Me" : "Login"} 
+          active={pathname === "/me" || pathname === "/login"} 
         />
       </div>
     </div>
