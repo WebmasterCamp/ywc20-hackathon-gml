@@ -292,65 +292,77 @@ export const MOCK_USERS: User[] = [
     }
   },
   // --- MOCKUP USERS: 20 male, 40 female, random bar assignment ---
-  ...Array.from({ length: 20 }, (_, i) => ({
-    id: `mock-male-${i+1}`,
-    username: `ชาย${i+1}`,
-    email: `male${i+1}@mock.com`,
-    avatar: `https://randomuser.me/api/portraits/men/${i+10}.jpg`,
-    bio: "หนุ่มสายชิลล์",
-    note: "กำลังหาเพื่อนใหม่",
-    favoriteBarIds: [],
-    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
-    joinDate: `2024-01-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
-    preferences: {
-      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
-      notifications: Math.random() > 0.5
-    }
-  })),
-  ...Array.from({ length: 40 }, (_, i) => ({
-    id: `mock-female-${i+1}`,
-    username: `หญิง${i+1}`,
-    email: `female${i+1}@mock.com`,
-    avatar: `https://randomuser.me/api/portraits/women/${i+10}.jpg`,
-    bio: "สาวสายปาร์ตี้",
-    note: "กำลังรอแก๊งค์",
-    favoriteBarIds: [],
-    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
-    joinDate: `2024-02-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
-    preferences: {
-      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
-      notifications: Math.random() > 0.5
-    }
-  })),
+  ...Array.from({ length: 20 }, (_, i) => {
+    const maleNames = ["ธนกร", "ภูมิใจ", "นครินทร์", "วิทยา", "สมชาย", "อนุชา", "เจษฎา", "ปิยะ", "วรวิทย์", "ธีระ", "กิตติ", "สุรพล", "วิชัย", "อิทธิ", "ธนพล", "ชัยวัฒน์", "อดิศร", "สิทธิ", "ปรีชา", "วินัย"];
+    return {
+      id: `mock-male-${i+1}`,
+      username: maleNames[i],
+      email: `male${i+1}@mock.com`,
+      avatar: `https://randomuser.me/api/portraits/men/${i+10}.jpg`,
+      bio: "หนุ่มสายชิลล์",
+      note: "กำลังหาเพื่อนใหม่",
+      favoriteBarIds: [],
+      currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+      joinDate: `2024-01-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+      preferences: {
+        favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+        notifications: Math.random() > 0.5
+      }
+    };
+  }),
+  ...Array.from({ length: 40 }, (_, i) => {
+    const femaleNames = ["สุภาพร", "วิภาวี", "อรอุมา", "นิภา", "จิราพร", "สุดา", "วราภรณ์", "ปิยดา", "สุนิสา", "จันทร์เพ็ญ", "ณัฐธิดา", "วรรณา", "รัชนี", "ปรียา", "สุกัญญา", "อารีย์", "กมลชนก", "ชุติมา", "ธิดารัตน์", "ภัทรา", "สิรินทร์", "จิตรา", "เบญจวรรณ", "อุษา", "ศิริลักษณ์", "พรทิพย์", "วิไลวรรณ", "สุพรรณี", "กัลยา", "ประไพ", "มาลี", "สมหญิง", "ผกาวรรณ", "รุ่งทิวา", "พิมพ์ใจ", "ศิริพร", "ศุภลักษณ์", "วาสนา", "อัญชลี", "เพียงใจ"];
+    return {
+      id: `mock-female-${i+1}`,
+      username: femaleNames[i],
+      email: `female${i+1}@mock.com`,
+      avatar: `https://randomuser.me/api/portraits/women/${i+10}.jpg`,
+      bio: "สาวสายปาร์ตี้",
+      note: "กำลังรอแก๊งค์",
+      favoriteBarIds: [],
+      currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+      joinDate: `2024-02-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+      preferences: {
+        favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+        notifications: Math.random() > 0.5
+      }
+    };
+  }),
   // --- MOCKUP USERS: 80 more, 40 male, 40 female, random bar assignment ---
-  ...Array.from({ length: 40 }, (_, i) => ({
-    id: `mock-male-extra-${i+1}`,
-    username: `ชาย${i+21}`,
-    email: `male-extra${i+1}@mock.com`,
-    avatar: `https://randomuser.me/api/portraits/men/${i+31}.jpg`,
-    bio: "หนุ่มสายชิลล์",
-    note: "กำลังหาเพื่อนใหม่",
-    favoriteBarIds: [],
-    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
-    joinDate: `2024-03-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
-    preferences: {
-      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
-      notifications: Math.random() > 0.5
-    }
-  })),
-  ...Array.from({ length: 40 }, (_, i) => ({
-    id: `mock-female-extra-${i+1}`,
-    username: `หญิง${i+41}`,
-    email: `female-extra${i+1}@mock.com`,
-    avatar: `https://randomuser.me/api/portraits/women/${i+51}.jpg`,
-    bio: "สาวสายปาร์ตี้",
-    note: "กำลังรอแก๊งค์",
-    favoriteBarIds: [],
-    currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
-    joinDate: `2024-04-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
-    preferences: {
-      favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
-      notifications: Math.random() > 0.5
-    }
-  }))
+  ...Array.from({ length: 40 }, (_, i) => {
+    const extraMaleNames = ["สมพงษ์", "นพดล", "วีระ", "ธนาวุฒิ", "อนันต์", "บัณฑิต", "อภิชาติ", "สุรชัย", "ธีรพงษ์", "วรพจน์", "อิสรา", "สิทธิศักดิ์", "ธีรยุทธ", "วีรวัฒน์", "พิพัฒน์", "อุดม", "ศักดิ์ดา", "สันติ", "เอกชัย", "ชาติชาย", "วชิระ", "อรรถพล", "พีระพัฒน์", "สุวิทย์", "ธีรธร", "สมเจตน์", "วิเชียร", "พิเชษฐ์", "อำนาจ", "สุทิน", "วิรัตน์", "ชาญชัย", "ปฏิภาณ", "สุภาพ", "วชิรวิทย์", "อิสริยะ", "ธีระศักดิ์", "วิษณุ", "สมบัติ", "ชัยโรจน์"];
+    return {
+      id: `mock-male-extra-${i+1}`,
+      username: extraMaleNames[i],
+      email: `male-extra${i+1}@mock.com`,
+      avatar: `https://randomuser.me/api/portraits/men/${i+31}.jpg`,
+      bio: "หนุ่มสายชิลล์",
+      note: "กำลังหาเพื่อนใหม่",
+      favoriteBarIds: [],
+      currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+      joinDate: `2024-03-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+      preferences: {
+        favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+        notifications: Math.random() > 0.5
+      }
+    };
+  }),
+  ...Array.from({ length: 40 }, (_, i) => {
+    const extraFemaleNames = ["รัตนา", "วิมล", "อรทัย", "สุนีย์", "นิรมล", "วิไล", "อุไรพร", "ธนิดา", "อรุณี", "ปทุมพร", "ญาดา", "อุบล", "ปรารถนา", "เพ็ญศรี", "ชุติกาญจน์", "สิริกุล", "ณิชา", "เอมอร", "ปัทมา", "สาวิตรี", "วาสุกี", "ชัญญา", "รัชดา", "จุฑารัตน์", "ศิรินทิพย์", "ปิยนุช", "ธมลวรรณ", "กาญจนา", "อิสรีย์", "พนิดา", "สิริมา", "นัชชา", "วีรยา", "อรพรรณ", "ณัชชา", "ปวีณา", "สุณิสา", "รัติกาล", "นิตยา", "สุภาณี"];
+    return {
+      id: `mock-female-extra-${i+1}`,
+      username: extraFemaleNames[i],
+      email: `female-extra${i+1}@mock.com`,
+      avatar: `https://randomuser.me/api/portraits/women/${i+51}.jpg`,
+      bio: "สาวสายปาร์ตี้",
+      note: "กำลังรอแก๊งค์",
+      favoriteBarIds: [],
+      currentBarId: (Math.floor(Math.random()*MOCK_BARS.length)+1).toString(),
+      joinDate: `2024-04-${(i%28+1).toString().padStart(2,'0')}T12:00:00Z`,
+      preferences: {
+        favoriteCategories: ["pub", "bar", "club", "bistro"].sort(() => 0.5 - Math.random()).slice(0,2),
+        notifications: Math.random() > 0.5
+      }
+    };
+  })
 ];
