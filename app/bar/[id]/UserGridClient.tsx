@@ -7,6 +7,7 @@ import { MapPin, Music, Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 
 interface UserGridClientProps {
@@ -21,6 +22,9 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "alphabetical">("newest");
   const [loading, setLoading] = useState(true);
+
+  // Determine if bar is out of range
+  const isOutOfRange = parseFloat((bar.distance || '').replace(/[^\d.]/g, '')) > 1;
 
   useEffect(() => {
     // Simulate loading data
@@ -188,13 +192,21 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       </div>
 
       {/* User List */}
-      <div className="flex-1 h-full px-0 pt-4 pb-8 overflow-y-auto">
-        <div className="flex flex-col gap-4 max-w-lg mx-auto">
+      <div className={"flex-1 h-full px-0 pt-4 pb-8 overflow-y-auto"}>
+        <div className={cn(
+          "flex flex-col gap-4 max-w-lg mx-auto",
+          isOutOfRange && "pointer-events-none"
+        )}>
           {filteredUsers.map((user) => (
             <div
               key={user.id}
-              className="bg-card rounded-xl shadow border border-border flex items-center px-4 py-3 gap-3 cursor-pointer hover:bg-muted/60 transition"
-              onClick={() => router.push(`/profile/${user.id}`)}
+              className={cn(
+                "bg-card rounded-xl shadow border border-border flex items-center px-4 py-3 gap-3 transition",
+                !isOutOfRange && "cursor-pointer hover:bg-muted/60"
+              )}
+              onClick={() => {
+                if (!isOutOfRange) router.push(`/profile/${user.id}`);
+              }}
             >
               {/* Profile Image */}
               <Image
@@ -202,7 +214,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
                 alt={user.username}
                 width={56}
                 height={56}
-                className="rounded-full object-cover border-2 border-theme-pink flex-shrink-0 w-12 h-12"
+                className={cn("rounded-full object-cover border-2 border-theme-pink flex-shrink-0 w-12 h-12", isOutOfRange && "blur-sm")}
               />
               {/* User Info */}
               <div className="flex-1 min-w-0">

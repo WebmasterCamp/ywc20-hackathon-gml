@@ -36,6 +36,13 @@ export function BarList() {
         return a.isOpen ? -1 : 1;
       }
 
+      // Then sort by distance (ascending)
+      const aDist = parseFloat((a.distance || '').replace(/[^\d.]/g, '')) || 9999;
+      const bDist = parseFloat((b.distance || '').replace(/[^\d.]/g, '')) || 9999;
+      if (aDist !== bDist) {
+        return aDist - bDist;
+      }
+
       // Then sort by number of people (descending)
       const aUsers = activeUsersMap[a.id] || 0;
       const bUsers = activeUsersMap[b.id] || 0;
