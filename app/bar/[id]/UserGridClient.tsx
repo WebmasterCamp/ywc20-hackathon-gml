@@ -27,16 +27,17 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
     // Simulate loading data
     setLoading(true);
     setTimeout(() => {
-      // Find users who like similar bar categories and are available to join
+      // Find users who are currently at this bar and have similar interests
       const similarUsers = MOCK_USERS.filter(u =>
         u.id !== user?.id && // Exclude current user
+        u.currentBarId === bar.id && // Only users currently at this bar
         u.preferences?.favoriteCategories?.includes(bar.category) // Similar interests
       );
       setAvailableUsers(similarUsers);
       setFilteredUsers(similarUsers);
       setLoading(false);
     }, 500);
-  }, [bar.category, user?.id]);
+  }, [bar.category, bar.id, user?.id]);
 
   // Filter and sort users
   useEffect(() => {
@@ -131,7 +132,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
           <div className="  flex-1 flex flex-col items-center justify-center bg-white rounded-xl p-3 border border-border">
             <div className="flex items-center gap-2 mb-1">
               <Users className="w-6 h-6 mb-1 text-foreground" />
-              <div className="text-2xl font-bold leading-none">{bar.activeUsers}</div>
+              <div className="text-2xl font-bold leading-none">{filteredUsers.length}</div>
             </div>
             <div className="text-xs text-muted-foreground">คนในร้านขณะนี้</div>
           </div>

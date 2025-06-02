@@ -5,7 +5,6 @@ export interface Bar {
   image: string;
   rating: number;
   location: string;
-  activeUsers: number;
   category: "pub" | "bar" | "club" | "bistro";
   features: string[];
   genre: string;
@@ -31,7 +30,6 @@ export const MOCK_BARS: Bar[] = [
     image: "/images/bar/1",
     rating: 4.3,
     location: "95/1 ซอยไอยราแกรนด์ คลองหนึ่ง คลองหลวง ปทุมธานี",
-    activeUsers: 37,
     category: "pub",
     features: ["Live Music", "Budget Friendly", "Student Crowd"],
     genre: "อินดี้ป็อป",
@@ -112,6 +110,7 @@ export interface User {
   avatar?: string;
   bio?: string;
   favoriteBarIds: string[];
+  currentBarId?: string; // ID of the bar where user is currently at
   joinDate: string;
   preferences?: {
     favoriteCategories?: string[];
@@ -142,6 +141,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "System Administrator",
     favoriteBarIds: [],
+    currentBarId: "1", // Currently at bar 1
     joinDate: "2023-01-01T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "bar", "club", "bistro"],
@@ -156,6 +156,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "System Administrator",
     favoriteBarIds: [],
+    currentBarId: "1", // Currently at bar 1
     joinDate: "2023-01-01T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "bar", "club", "bistro"],
@@ -170,6 +171,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Love live music and craft cocktails",
     favoriteBarIds: ["1", "4"],
+    currentBarId: "1", // Currently at bar 1
     joinDate: "2023-11-15T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "club"],
@@ -184,6 +186,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Cocktail enthusiast and food lover",
     favoriteBarIds: ["2", "6"],
+    currentBarId: "2", // Currently at bar 2
     joinDate: "2023-12-03T00:00:00Z",
     preferences: {
       favoriteCategories: ["bistro", "bar"],
@@ -198,6 +201,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Pool player and party lover",
     favoriteBarIds: ["3"],
+    currentBarId: "3", // Currently at bar 3
     joinDate: "2023-10-20T00:00:00Z",
     preferences: {
       favoriteCategories: ["club", "pub"],
@@ -212,6 +216,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Casual drinker who enjoys good atmosphere",
     favoriteBarIds: ["2", "5"],
+    currentBarId: "2", // Currently at bar 2
     joinDate: "2023-09-12T00:00:00Z",
     preferences: {
       favoriteCategories: ["bar", "bistro"],
@@ -226,12 +231,14 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Funk music lover and beer connoisseur",
     favoriteBarIds: ["4"],
+    currentBarId: "4", // Currently at bar 4
     joinDate: "2023-08-25T00:00:00Z",
     preferences: {
       favoriteCategories: ["bar"],
       notifications: true
     }
-  },  {
+  },
+  {
     id: "user6",
     username: "Lisa",
     email: "lisa@example.com",
@@ -239,6 +246,7 @@ export const MOCK_USERS: User[] = [
     avatar: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "Student who loves chill spots",
     favoriteBarIds: ["5", "6"],
+    currentBarId: "5", // Currently at bar 5
     joinDate: "2023-07-18T00:00:00Z",
     preferences: {
       favoriteCategories: ["pub", "bistro"],

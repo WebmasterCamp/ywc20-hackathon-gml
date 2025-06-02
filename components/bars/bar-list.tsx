@@ -1,11 +1,11 @@
 "use client";
 
-import { MOCK_BARS } from "@/lib/constants";
+import { MOCK_BARS, MOCK_USERS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Music, Navigation, User, Wine } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 interface Bar {
   id: string;
@@ -13,7 +13,6 @@ interface Bar {
   location: string;
   genre: string;
   todaysBand: string;
-  activeUsers: number;
   isOpen: boolean;
   coordinates?: {
     lat: number;
@@ -24,6 +23,19 @@ interface Bar {
 export function BarList() {
   const router = useRouter();
   const [bars] = useState<Bar[]>(MOCK_BARS);
+  const [activeUsersMap, setActiveUsersMap] = useState<Record<string, number>>({});
+
+  // Calculate active users for each bar
+  useEffect(() => {
+    const usersInBars = MOCK_USERS.reduce((acc, user) => {
+      if (user.currentBarId) {
+        acc[user.currentBarId] = (acc[user.currentBarId] || 0) + 1;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+
+    setActiveUsersMap(usersInBars);
+  }, []);
 
   // Sort bars by status and number of people
   const sortedBars = useMemo(() => {
@@ -34,9 +46,25 @@ export function BarList() {
       }
 
       // Then sort by number of people (descending)
-      return b.activeUsers - a.activeUsers;
+      const aUsers = activeUsersMap[a.id] || 0;
+      const bUsers = activeUsersMap[b.id] || 0;
+      return bUsers - aUsers;
     });
-  }, [bars]);
+  }, [bars, activeUsersMap]);
+
+  // Function to get active users count for a bar
+  const getActiveUsersCount = (barId: string) => {
+    return activeUsersMap[barId] || 0;
+  };
+
+  // Generate mock male/female counts for each bar
+  const getGenderCounts = (barId: string, activeUsers: number) => {
+    const seed = parseInt(barId) || 1;
+    const maleRatio = 0.4 + ((seed * 17) % 20) * 0.01;
+    const maleCount = Math.floor(activeUsers * maleRatio);
+    const femaleCount = activeUsers - maleCount;
+    return { male: maleCount, female: femaleCount };
+  };
 
   // Function to open Google Maps
   const openGoogleMaps = (bar: Bar, event: React.MouseEvent) => {
@@ -51,15 +79,6 @@ export function BarList() {
     }
 
     window.open(mapsUrl, '_blank');
-  };
-
-  // Generate mock male/female counts for each bar
-  const getGenderCounts = (barId: string, activeUsers: number) => {
-    const seed = parseInt(barId) || 1;
-    const maleRatio = 0.4 + ((seed * 17) % 20) * 0.01;
-    const maleCount = Math.floor(activeUsers * maleRatio);
-    const femaleCount = activeUsers - maleCount;
-    return { male: maleCount, female: femaleCount };
   };
 
   // Generate placeholder image for each bar
@@ -93,7 +112,7 @@ export function BarList() {
             { top: "68%", left: "78%" },
             { top: "58%", left: "18%" },
           ];
-          const genderCounts = getGenderCounts(bar.id, bar.activeUsers);
+          const genderCounts = getGenderCounts(bar.id, getActiveUsersCount(bar.id));
 
           return (
             <div
@@ -141,7 +160,8 @@ export function BarList() {
           {/* Bar Items */}
           <div className="p-4 space-y-4 max-h-80 overflow-y-auto">
             {sortedBars.map((bar, index) => {
-              const genderCounts = getGenderCounts(bar.id, bar.activeUsers);
+              const activeUsers = getActiveUsersCount(bar.id);
+              const genderCounts = getGenderCounts(bar.id, activeUsers);
               return (
                 <div
                   key={bar.id}
@@ -215,7 +235,7 @@ export function BarList() {
                         </div>
 
                         <div className="text-xs text-muted-foreground">
-                          {bar.activeUsers} คน
+                          {activeUsers} คน
                         </div>
                       </div>
                     </div>
