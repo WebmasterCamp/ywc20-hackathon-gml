@@ -44,15 +44,15 @@ const DecorativeDivider: FC = () => (
 const TitleSection: FC<{ title: string }> = ({ title }) => (
   <div className="flex items-center justify-center gap-3 mb-4">
     <div className="relative">
-      <Beer className="h-8 w-8 sm:h-10 sm:w-10 text-pub-amber animate-pour" />
-      <div className="absolute -top-1 -right-1 w-3 h-3 bg-pub-foam rounded-full animate-fizz" />
+      {/* <Beer className="h-8 w-8 sm:h-10 sm:w-10 text-pub-amber animate-pour" /> */}
+      {/* <div className="absolute -top-1 -right-1 w-3 h-3 bg-pub-foam rounded-full animate-fizz" /> */}
     </div>
     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pub-copper via-pub-brass to-pub-gold bg-clip-text text-transparent">
       {title}
     </h1>
     <div className="relative">
-      <Beer className="h-8 w-8 sm:h-10 sm:w-10 text-pub-amber animate-pour delay-500" />
-      <div className="absolute -top-1 -left-1 w-3 h-3 bg-pub-foam rounded-full animate-fizz delay-300" />
+      {/* <Beer className="h-8 w-8 sm:h-10 sm:w-10 text-pub-amber animate-pour delay-500" /> */}
+      {/* <div className="absolute -top-1 -left-1 w-3 h-3 bg-pub-foam rounded-full animate-fizz delay-300" /> */}
     </div>
   </div>
 );
