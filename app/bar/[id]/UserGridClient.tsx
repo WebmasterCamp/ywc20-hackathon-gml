@@ -124,8 +124,8 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       {/* Cover Image Section */}
       <div className="absolute w-full h-[220px] left-0 top-0">
         <Image
-          src="/images/cover/1.png"
-          alt="Bar Cover"
+          src={bar.image || "/images/cover/1.png"}
+          alt={bar.name}
           fill
           className="object-cover w-full h-full"
           priority
@@ -218,9 +218,6 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
                 </div>
                 <div className="font-semibold text-sm leading-tight truncate">
                   {user.username}
-                </div>
-                <div className="text-xs text-muted-foreground mb-1 truncate">
-                  {user.bio || "มหาสนั่นท์"}
                 </div>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {user.preferences?.favoriteCategories?.slice(0, 3).map((cat) => (
