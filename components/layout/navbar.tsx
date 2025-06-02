@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MessageSquare, UserCircle, Search, LogIn, Beer, Wine, Users } from "lucide-react";
+import { Home, MessageSquare, UserCircle, Search, LogIn, Beer, Wine, Users, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -16,8 +16,7 @@ export function Navbar() {
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl">
       {/* Decorative foam bubbles */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pub-foam/80 to-transparent"></div>
-      
-      <div className="grid h-full grid-cols-4 px-2 relative">
+        <div className="grid h-full grid-cols-5 px-2 relative">
         {/* Background pattern */}
         <div className="absolute inset-0 bg-wood-texture opacity-20"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-pub-mahogany/50 to-transparent"></div>
@@ -36,6 +35,19 @@ export function Navbar() {
           label={user ? "Me" : "Login"} 
           active={pathname === "/me" || pathname === "/login"} 
         />
+        {/* Admin Button - Only show for admin users */}
+        {(user?.id === "admin" || user?.id === "cojoin") ? (
+          <NavButton 
+            href="/dashboard" 
+            icon={<Settings className="h-5 w-5" />} 
+            label="Admin" 
+            active={pathname === "/dashboard"} 
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center py-2 px-1">
+            {/* Empty space for non-admin users */}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -81,13 +93,21 @@ export function Navbar() {
           icon={<MessageSquare className="h-5 w-5 mr-2" />} 
           label="Chat" 
           active={pathname === "/chat"}
-        />
-        <SidebarNavButton 
+        />        <SidebarNavButton 
           href={user ? "/me" : "/login"} 
           icon={user ? <UserCircle className="h-5 w-5 mr-2" /> : <LogIn className="h-5 w-5 mr-2" />}
           label={user ? "Me" : "Login"} 
           active={pathname === "/me" || pathname === "/login"} 
         />
+        {/* Admin Dashboard - Only show for admin users */}
+        {(user?.id === "admin" || user?.id === "cojoin") && (
+          <SidebarNavButton 
+            href="/dashboard" 
+            icon={<Settings className="h-5 w-5 mr-2" />}
+            label="Admin" 
+            active={pathname === "/dashboard"} 
+          />
+        )}
       </div>
     </div>
   );
