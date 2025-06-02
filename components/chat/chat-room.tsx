@@ -16,9 +16,11 @@ interface ChatRoomProps {
   messages: Message[];
   currentUser: User;
   onSendMessage: (content: string) => void;
+  className?: string;
+  hideHeader?: boolean;
 }
 
-export function ChatRoom({ roomName, messages, currentUser, onSendMessage }: ChatRoomProps) {
+export function ChatRoom({ roomName, messages, currentUser, onSendMessage, className, hideHeader = false }: ChatRoomProps) {
   const [newMessage, setNewMessage] = useState("");
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -34,16 +36,14 @@ export function ChatRoom({ roomName, messages, currentUser, onSendMessage }: Cha
       onSendMessage(newMessage.trim());
       setNewMessage("");
     }
-  };
-  
-  return (
-    <div className="flex flex-col h-[70vh] sm:h-[70vh] max-h-[600px]">
-      <div className="p-3 sm:p-4 border-b bg-background/95 backdrop-blur-sm">
-        <h2 className="text-base sm:text-lg font-medium">{roomName}</h2>
-        <p className="text-xs sm:text-sm text-muted-foreground">{messages.length} messages</p>
-      </div>
-      
-      <ScrollArea ref={scrollAreaRef} className="flex-1 p-3 sm:p-4">
+  };  return (
+    <div className={cn("flex flex-col h-full", className)}>
+      {!hideHeader && (
+        <div className="p-3 sm:p-4 border-b bg-background/95 backdrop-blur-sm flex-shrink-0">
+          <h2 className="text-base sm:text-lg font-medium">{roomName}</h2>
+          <p className="text-xs sm:text-sm text-muted-foreground">{messages.length} messages</p>
+        </div>
+      )}      <ScrollArea ref={scrollAreaRef} className="flex-1 p-3 sm:p-4 min-h-0 pb-20 md:pb-3">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-muted-foreground text-center px-4">
             <div>
@@ -53,17 +53,16 @@ export function ChatRoom({ roomName, messages, currentUser, onSendMessage }: Cha
             </div>
           </div>
         ) : (
-          <div className="space-y-3 sm:space-y-4">
-            {messages.map((message) => (
+          <div className="space-y-3 sm:space-y-4 pb-4 md:pb-0">            {messages.map((message) => (
               <div
                 key={message.id}
                 className={cn(
-                  "flex gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%]",
+                  "flex items-end gap-2 sm:gap-3 max-w-[85%] sm:max-w-[80%]",
                   message.userId === currentUser.id ? "ml-auto" : ""
                 )}
               >
                 {message.userId !== currentUser.id && (
-                  <Avatar className="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0">
+                  <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                     <AvatarImage src={message.avatar} alt={message.username} />
                     <AvatarFallback className="text-xs">{message.username.substring(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
@@ -83,17 +82,17 @@ export function ChatRoom({ roomName, messages, currentUser, onSendMessage }: Cha
                   </div>
                   
                   <div className={cn(
-                    "p-2.5 sm:p-3 rounded-lg max-w-full break-words",
+                    "p-2.5 sm:p-3 max-w-full break-words",
                     message.userId === currentUser.id 
-                      ? "bg-primary text-primary-foreground ml-auto" 
-                      : "bg-secondary"
+                      ? "bg-primary text-primary-foreground ml-auto rounded-lg rounded-br-none" 
+                      : "bg-secondary rounded-lg rounded-bl-none"
                   )}>
                     <p className="text-xs sm:text-sm leading-relaxed">{message.content}</p>
                   </div>
                 </div>
                 
                 {message.userId === currentUser.id && (
-                  <Avatar className="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0">
+                  <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                     <AvatarImage src={message.avatar} alt={message.username} />
                     <AvatarFallback className="text-xs">{message.username.substring(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
@@ -104,9 +103,8 @@ export function ChatRoom({ roomName, messages, currentUser, onSendMessage }: Cha
           </div>
         )}
       </ScrollArea>
-      
-      <div className="p-3 sm:p-4 border-t mt-auto bg-background/95 backdrop-blur-sm">
-        <form onSubmit={handleSendMessage} className="flex gap-2">
+        <div className="p-3 sm:p-4 border-t bg-background/95 backdrop-blur-sm flex-shrink-0 md:relative fixed bottom-16 left-0 right-0 md:bottom-auto z-10">
+        <form onSubmit={handleSendMessage} className="flex gap-2 max-w-4xl mx-auto">
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}

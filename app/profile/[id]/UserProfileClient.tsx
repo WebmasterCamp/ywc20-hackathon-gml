@@ -1,8 +1,22 @@
 "use client";
 import { User } from "@/lib/constants";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth/auth-provider";
 import Image from "next/image";
 
 export default function UserProfileClient({ user }: { user: User }) {
+  const router = useRouter();
+  const { user: currentUser } = useAuth();
+
+  const handleJoinChat = () => {
+    if (!currentUser) {
+      router.push("/login");
+      return;
+    }
+
+    // Navigate to personal chat with this user
+    router.push(`/chat/${user.id}`);
+  };
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -13,12 +27,11 @@ export default function UserProfileClient({ user }: { user: User }) {
 
   return (
     <div className="bg-background flex flex-col items-center py-8 px-4">
-      <div className="text-3xl font-semibold mb-6">Profile</div>
-      {/* Quote */}
+      <div className="text-3xl font-semibold mb-6">Profile</div>      {/* Quote */}
       <div className="bg-muted text-foreground rounded-xl px-6 py-4 text-lg font-medium mb-4 w-full max-w-md text-center relative">
-        <span className="absolute left-4 top-2 text-3xl">"</span>
+        <span className="absolute left-4 top-2 text-3xl">&ldquo;</span>
         <span>ต้องการใครสักคนที่เข้าใจ</span>
-        <span className="absolute right-4 bottom-2 text-3xl">"</span>
+        <span className="absolute right-4 bottom-2 text-3xl">&rdquo;</span>
       </div>
       {/* Avatar */}
       <div className="relative mb-4">
@@ -30,7 +43,7 @@ export default function UserProfileClient({ user }: { user: User }) {
           className="rounded-full border-4 border-theme-pink object-cover w-28 h-28"
         />
         <span className="absolute bottom-2 right-2 bg-blue-500 rounded-full p-1 border-2 border-white">
-          <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
         </span>
       </div>
       {/* User Info */}
@@ -41,9 +54,9 @@ export default function UserProfileClient({ user }: { user: User }) {
           <div>อาชีพ <span className="font-medium">นักศึกษา</span></div>
         </div>
         <div className="flex gap-3 w-full mb-4">
-          <button className="flex-1 bg-muted text-foreground rounded-full py-2 font-medium">ความชอบ 1</button>
-          <button className="flex-1 bg-muted text-foreground rounded-full py-2 font-medium">ความชอบ 2</button>
-          <button className="flex-1 bg-muted text-foreground rounded-full py-2 font-medium">ความชอบ 3</button>
+          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">ความชอบ 1</button>
+          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">ความชอบ 2</button>
+          <button className="flex-1 bg-gradient-to-r from-[#9F45B0] to-[#FE8CC5] text-white rounded-full py-2 font-medium">ความชอบ 3</button>
         </div>
         <div className="text-center text-muted-foreground text-base mb-2">
           {user.bio || "-"}
@@ -62,7 +75,12 @@ export default function UserProfileClient({ user }: { user: User }) {
         <Image src="/badges/acts.png" alt="Acts of Service" width={90} height={90} />
         <Image src="/badges/receiving.png" alt="Receiving Gifts" width={90} height={90} />
       </div>
-      <button className="w-full max-w-md bg-foreground text-background rounded-full py-4 text-xl font-bold shadow-lg hover:bg-theme-pink transition">จอยกัน !</button>
+      <button
+        className="w-full max-w-md bg-foreground text-background rounded-full py-4 text-xl font-bold shadow-lg hover:bg-theme-pink transition"
+        onClick={handleJoinChat}
+      >
+        จอยกัน !
+      </button>
     </div>
   );
 } 
