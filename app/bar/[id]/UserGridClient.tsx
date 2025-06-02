@@ -156,7 +156,11 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
       <div className="flex-1 bg-muted/40 px-0 pt-4 pb-8 overflow-y-auto">
         <div className="flex flex-col gap-4 max-w-lg mx-auto">
           {filteredUsers.map((user) => (
-            <div key={user.id} className="bg-card rounded-xl shadow border border-border flex items-center px-4 py-3 gap-3">
+            <div
+              key={user.id}
+              className="bg-card rounded-xl shadow border border-border flex items-center px-4 py-3 gap-3 cursor-pointer hover:bg-muted/60 transition"
+              onClick={() => router.push(`/profile/${user.id}`)}
+            >
               {/* Profile Image */}
               <Image
                 src={user.avatar || "/default-avatar.png"}
