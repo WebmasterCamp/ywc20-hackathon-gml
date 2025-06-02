@@ -59,25 +59,33 @@ export default function ChatPage() {
   const lobbyMessages = messages.filter(msg => msg.barId === "lobby");
   const bar1Messages = messages.filter(msg => msg.barId === "1");
   const bar2Messages = messages.filter(msg => msg.barId === "2");
-  
-  return (
-    <div className="container px-4 py-4 md:py-8 max-w-4xl mx-auto">
+    return (
+    <div className="container px-3 py-3 sm:px-4 sm:py-4 md:py-6 lg:py-8 max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto">
       <PageHeader
         title="Chat Rooms"
         description="Connect with other bar enthusiasts"
       />
       
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden shadow-lg">
         <Tabs defaultValue="lobby" className="w-full">
           <div className="border-b">
-            <TabsList className="w-full justify-start rounded-none h-12">
-              <TabsTrigger value="lobby" className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary">
+            <TabsList className="w-full justify-start rounded-none h-10 sm:h-12 md:h-14 overflow-x-auto">
+              <TabsTrigger 
+                value="lobby" 
+                className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary text-xs sm:text-sm md:text-base px-2 sm:px-4 md:px-6 whitespace-nowrap"
+              >
                 Lobby
               </TabsTrigger>
-              <TabsTrigger value="craftyBrew" className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary">
+              <TabsTrigger 
+                value="craftyBrew" 
+                className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary text-xs sm:text-sm md:text-base px-2 sm:px-4 md:px-6 whitespace-nowrap"
+              >
                 The Crafty Brew
               </TabsTrigger>
-              <TabsTrigger value="skylineLounge" className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary">
+              <TabsTrigger 
+                value="skylineLounge" 
+                className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary text-xs sm:text-sm md:text-base px-2 sm:px-4 md:px-6 whitespace-nowrap"
+              >
                 Skyline Lounge
               </TabsTrigger>
             </TabsList>

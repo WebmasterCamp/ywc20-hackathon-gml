@@ -84,33 +84,34 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   }
-
   return (
-    <div className="flex items-center justify-center min-h-screen p-3 sm:p-4">
-      <Card className="w-full max-w-md">        <CardHeader className="space-y-1 text-center sm:text-left">
-        <CardTitle className="text-xl sm:text-2xl font-bold">
-          {step === 'email' ? 'ยินดีต้อนรับกลับมา' : 'กรอกรหัส OTP'}
-        </CardTitle>
-        <CardDescription className="text-sm sm:text-base">
-          {step === 'email'
-            ? 'กรอกที่อยู่อีเมลของคุณเพื่อรับรหัส OTP'
-            : `เราได้ส่งรหัสยืนยันไปที่ ${email}`
-          }
-        </CardDescription>
-      </CardHeader><CardContent>
+    <div className="flex items-center justify-center min-h-screen p-3 sm:p-4 md:p-6 lg:p-8">
+      <Card className="w-full max-w-md lg:max-w-lg xl:max-w-xl">
+        <CardHeader className="space-y-1 text-center sm:text-left px-4 py-4 md:px-6 md:py-6">
+          <CardTitle className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
+            {step === 'email' ? 'ยินดีต้อนรับกลับมา' : 'กรอกรหัส OTP'}
+          </CardTitle>
+          <CardDescription className="text-sm sm:text-base md:text-lg">
+            {step === 'email'
+              ? 'กรอกที่อยู่อีเมลของคุณเพื่อรับรหัส OTP'
+              : `เราได้ส่งรหัสยืนยันไปที่ ${email}`
+            }
+          </CardDescription>        </CardHeader>
+        <CardContent className="px-4 py-4 md:px-6 md:py-6">
           {step === 'email' ? (
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmitEmail)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmitEmail)} className="space-y-4 md:space-y-6">
                 <FormField
                   control={form.control}
-                  name="email" render={({ field }) => (
+                  name="email"
+                  render={({ field }) => (
                     <FormItem>
-                      <FormLabel>ที่อยู่อีเมล</FormLabel>
+                      <FormLabel className="text-sm md:text-base">ที่อยู่อีเมล</FormLabel>
                       <FormControl>
                         <Input
                           type="text" // เปลี่ยนจาก email เป็น text เพื่อรองรับอีเมลภาษาไทย
                           placeholder="your@email.com"
-                          className="h-11 sm:h-10"
+                          className="h-11 sm:h-10 md:h-12 text-base md:text-lg"
                           {...field}
                         />
                       </FormControl>
@@ -118,51 +119,51 @@ export default function LoginPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full h-11 sm:h-10 text-base sm:text-sm" disabled={isLoading}>
+                <Button type="submit" className="w-full h-11 sm:h-10 md:h-12 text-base sm:text-sm md:text-lg font-semibold" disabled={isLoading}>
                   {isLoading ? "กำลังส่ง OTP..." : "ส่ง OTP"}
                 </Button>
               </form>
             </Form>
           ) : (
             <Form {...otpForm}>
-              <form onSubmit={otpForm.handleSubmit(onSubmitOTP)} className="space-y-4">                <FormField
-                control={otpForm.control}
-                name="otp"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>รหัส OTP 6 หลัก</FormLabel>
-                    <FormControl>
-                      <InputOTP
-                        maxLength={6}
-                        value={field.value}
-                        onChange={field.onChange}
-                        className="justify-center"
-                      >
-                        <InputOTPGroup>
-                          <InputOTPSlot index={0} />
-                          <InputOTPSlot index={1} />
-                          <InputOTPSlot index={2} />
-                          <InputOTPSlot index={3} />
-                          <InputOTPSlot index={4} />
-                          <InputOTPSlot index={5} />
-                        </InputOTPGroup>
-                      </InputOTP>
-                    </FormControl>
-                    <FormMessage />
+              <form onSubmit={otpForm.handleSubmit(onSubmitOTP)} className="space-y-4 md:space-y-6">
+                <FormField
+                  control={otpForm.control}
+                  name="otp"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm md:text-base">รหัส OTP 6 หลัก</FormLabel>
+                      <FormControl>
+                        <InputOTP
+                          maxLength={6}
+                          value={field.value}
+                          onChange={field.onChange}
+                          className="justify-center scale-90 md:scale-100"
+                        >
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </FormControl>
+                      <FormMessage />
                     <p className="text-xs text-muted-foreground text-center">
                       กรอกตัวเลข 6 หลักที่ท่านได้รับทางอีเมล
                     </p>
                   </FormItem>
                 )}
-              />
-                <div className="space-y-2">
-                  <Button type="submit" className="w-full h-11 sm:h-10 text-base sm:text-sm" disabled={isLoading}>
+              />                <div className="space-y-3 md:space-y-4">
+                  <Button type="submit" className="w-full h-11 sm:h-10 md:h-12 text-base sm:text-sm md:text-lg font-semibold" disabled={isLoading}>
                     {isLoading ? "กำลังตรวจสอบ..." : "ตรวจสอบ OTP"}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full h-11 sm:h-10 text-base sm:text-sm"
+                    className="w-full h-11 sm:h-10 md:h-12 text-base sm:text-sm md:text-lg"
                     onClick={() => {
                       setStep('email');
                       setEmail('');
@@ -175,11 +176,11 @@ export default function LoginPage() {
                 </div>
               </form>
             </Form>
-          )}
-        </CardContent>        <CardFooter className="flex flex-col space-y-4">
-          <div className="text-sm text-center text-muted-foreground">
+          )}        </CardContent>
+        <CardFooter className="flex flex-col space-y-4 px-4 py-4 md:px-6 md:py-6">
+          <div className="text-sm md:text-base text-center text-muted-foreground">
             ยังไม่มีบัญชี?{" "}
-            <Link href="/register" className="text-primary underline underline-offset-2 font-medium">
+            <Link href="/register" className="text-primary underline underline-offset-2 font-medium hover:text-primary/80 transition-colors">
               สมัครสมาชิก
             </Link>
           </div>

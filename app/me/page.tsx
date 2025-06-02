@@ -64,66 +64,66 @@ export default function ProfilePage() {
       setIsLoading(false);
     }
   }
-
   return (
-    <div className="container px-4 py-4 md:py-8 max-w-3xl mx-auto">
+    <div className="container px-3 py-3 sm:px-4 sm:py-4 md:py-6 lg:py-8 max-w-3xl xl:max-w-5xl mx-auto">
       <PageHeader
         title="Profile"
         description="Manage your account settings"
       />
       
-      <Card>
-        <CardHeader className="space-y-1">
-          <div className="flex items-center space-x-4">
-            <Avatar className="h-20 w-20">
+      <Card className="shadow-lg">
+        <CardHeader className="space-y-1 px-4 py-4 md:px-6 md:py-6">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-6">
+            <Avatar className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
               <AvatarImage src={user.avatar} alt={user.username} />
-              <AvatarFallback>{user.username.substring(0, 2).toUpperCase()}</AvatarFallback>
+              <AvatarFallback className="text-lg md:text-xl lg:text-2xl">{user.username.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
-            <div>
-              <CardTitle className="text-2xl">{user.username}</CardTitle>
-              <CardDescription>Member since {new Date(user.joinDate).toLocaleDateString()}</CardDescription>
+            <div className="text-center sm:text-left">
+              <CardTitle className="text-xl md:text-2xl lg:text-3xl">{user.username}</CardTitle>
+              <CardDescription className="text-sm md:text-base">Member since {new Date(user.joinDate).toLocaleDateString()}</CardDescription>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
+        </CardHeader>        <CardContent className="px-4 py-4 md:px-6 md:py-6">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm md:text-base">Username</FormLabel>
+                      <FormControl>
+                        <Input {...field} className="h-10 md:h-12" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm md:text-base">Email</FormLabel>
+                      <FormControl>
+                        <Input {...field} className="h-10 md:h-12" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bio</FormLabel>
+                    <FormLabel className="text-sm md:text-base">Bio</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Tell us a little about yourself"
-                        className="resize-none"
+                        className="resize-none min-h-20 md:min-h-24"
                         {...field}
                         value={field.value || ""}
                       />
@@ -137,25 +137,25 @@ export default function ProfilePage() {
                 name="avatarUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Avatar URL</FormLabel>
+                    <FormLabel className="text-sm md:text-base">Avatar URL</FormLabel>
                     <FormControl>
-                      <Input {...field} value={field.value || ""} />
+                      <Input {...field} value={field.value || ""} className="h-10 md:h-12" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={isLoading} className="mt-4">
+              <Button type="submit" disabled={isLoading} className="mt-4 md:mt-6 h-10 md:h-12 text-base md:text-lg font-semibold w-full sm:w-auto">
                 {isLoading ? "Saving..." : "Save Changes"}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-between pt-4 border-t">
-          <Button variant="outline" onClick={() => router.push("/")}>
+        <CardFooter className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 pt-4 md:pt-6 border-t">
+          <Button variant="outline" onClick={() => router.push("/")} className="h-10 md:h-12 w-full sm:w-auto text-sm md:text-base">
             Cancel
           </Button>
-          <Button variant="destructive" onClick={logout}>
+          <Button variant="destructive" onClick={logout} className="h-10 md:h-12 w-full sm:w-auto text-sm md:text-base">
             Logout
           </Button>
         </CardFooter>
