@@ -17,7 +17,7 @@ export function Navbar() {
   // Mobile bottom navigation
   const mobileNav = !isOpen && (
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl flex items-center justify-center">
-      <div className="flex w-full max-w-md mx-auto justify-center gap-[140px] items-center px-8 relative">
+      <div className="flex w-full max-w-xl mx-auto justify-between  items-center px-10 relative">
         {/* Home */}
         <Link href="/" className={cn(
           "flex flex-col items-center justify-center text-pub-foam hover:text-pub-amber transition-all",
