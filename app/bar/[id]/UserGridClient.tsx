@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Users, Star, MessageSquare, UserPlus, Search, CalendarDays, Coffee, UserCircle } from "lucide-react";
+import { Users, Star, MessageSquare, UserPlus, Search, CalendarDays, Coffee, UserCircle, MapPin, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MOCK_USERS, User } from "@/lib/constants";
 import { useAuth } from "@/components/auth/auth-provider";
 import { formatDistanceToNow } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface Bar {
   id: string;
@@ -24,6 +25,12 @@ interface Bar {
   activeUsers: number;
   category: string;
   features: string[];
+  distance?: string;
+  band?: {
+    name: string;
+    description: string;
+    image: string;
+  };
 }
 
 interface UserGridClientProps {
@@ -101,153 +108,101 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
   }
 
   return (
-    <>
-      {/* Header Section */}
-      <div className="relative rounded-xl overflow-hidden h-32 md:h-48 mb-6">
-        <Image
-          src={bar.image}
-          alt={bar.name}
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-          <div className="p-4 md:p-6 text-white w-full">
-            <h1 className="text-2xl md:text-3xl font-bold">{bar.name}</h1>
-            <div className="flex items-center mt-2">
-              <Badge variant="secondary" className="mr-2 bg-white/20 hover:bg-white/20">
-                {bar.category.charAt(0).toUpperCase() + bar.category.slice(1)}
-              </Badge>
-              <div className="flex items-center text-yellow-400">
-                <Star className="h-4 w-4 fill-current" />
-                <span className="ml-1 text-white">{bar.rating}</span>
-              </div>
-            </div>
+    <div className="bg-background text-foreground flex flex-col">
+      {/* Header */}
+      <div className="bg-card px-4 pt-6 pb-4 rounded-b-3xl shadow-md">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold leading-tight">{bar.name}</h1>
+            <span className="flex items-center text-sm text-muted-foreground ml-2">
+              <MapPin className="w-4 h-4 mr-1" />
+              {bar.distance || "0.8 กม."}
+            </span>
           </div>
+          {/* Placeholder for logout/profile */}
         </div>
-      </div>
-
-      {/* Page Info */}
-      <div className="mb-6">
-        <h2 className="text-xl md:text-2xl font-bold mb-2">
-          Find People to Join at {bar.name}
-        </h2>
-        <p className="text-muted-foreground">
-          Connect with other {bar.category} enthusiasts who love the same vibe as you do.
+        <p className="text-sm text-muted-foreground mb-3">
+          {bar.description || "Lorem ipsum dolor amet consectetur. Lacus leo gravida."}
         </p>
-      </div>
-
-      {/* Search and Filter Controls */}
-      <Card className="p-4 mb-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search users by name or bio..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
-          <div className="sm:w-48">
-            <Select value={sortBy} onValueChange={(value: "newest" | "oldest" | "alphabetical") => setSortBy(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest Members</SelectItem>
-                <SelectItem value="oldest">Oldest Members</SelectItem>
-                <SelectItem value="alphabetical">A-Z</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </Card>
-
-      {/* User Grid */}
-      {filteredUsers.length === 0 ? (
-        <Card className="p-8 text-center">
-          <Users className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="text-lg font-medium">No users found</h3>
-          <p className="text-muted-foreground mt-2">
-            {searchTerm ? 
-              "Try adjusting your search terms or filters." : 
-              "No users with similar interests are currently available to join."
-            }
-          </p>
-        </Card>
-      ) : (
-        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {filteredUsers.map((targetUser) => (
-            <Card key={targetUser.id} className="p-4 hover:shadow-lg transition-all duration-200 border-2 hover:border-primary/20">
-              <div className="flex items-start gap-4">
-                <Avatar className="h-12 w-12 flex-shrink-0">
-                  <AvatarImage src={targetUser.avatar} alt={targetUser.username} />
-                  <AvatarFallback>{targetUser.username.substring(0, 2).toUpperCase()}</AvatarFallback>
-                </Avatar>
-                
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-sm truncate">{targetUser.username}</h3>
-                    <Badge variant="outline" className="text-xs px-1 py-0">
-                      {targetUser.preferences?.favoriteCategories?.[0] || bar.category}
-                    </Badge>
-                  </div>
-                  
-                  <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
-                    {targetUser.bio || "No bio available"}
-                  </p>
-                  
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
-                    <div className="flex items-center gap-1">
-                      <CalendarDays className="h-3 w-3" />
-                      <span>Joined {formatDistanceToNow(new Date(targetUser.joinDate), { addSuffix: true })}</span>
-                    </div>
-                  </div>
-                  
-                  {/* Favorite Categories */}
-                  {targetUser.preferences?.favoriteCategories && (
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {targetUser.preferences.favoriteCategories.slice(0, 3).map((category) => (
-                        <Badge key={category} variant="secondary" className="text-xs px-1.5 py-0.5">
-                          {category}
-                        </Badge>
-                      ))}
-                      {targetUser.preferences.favoriteCategories.length > 3 && (
-                        <Badge variant="secondary" className="text-xs px-1.5 py-0.5">
-                          +{targetUser.preferences.favoriteCategories.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                  )}
-                  
-                  {/* Action Buttons */}
-                  <div className="flex gap-2">
-                    <Button 
-                      size="sm" 
-                      className="flex-1 h-8 text-xs"
-                      onClick={() => handleConnectUser(targetUser)}
-                    >
-                      <UserPlus className="h-3 w-3 mr-1" />
-                      Connect
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="flex-1 h-8 text-xs"
-                      onClick={() => handleMessageUser(targetUser)}
-                    >
-                      <MessageSquare className="h-3 w-3 mr-1" />
-                      Message
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Card>
+        {/* Feature Tags */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {bar.features?.map((feature) => (
+            <Badge
+              key={feature}
+              className="rounded-full px-3 py-1 bg-background border border-foreground/30 text-foreground text-xs font-medium shadow-sm"
+            >
+              #{feature}
+            </Badge>
           ))}
         </div>
-      )}
+        {/* Stats & Band */}
+        <div className="flex gap-2 w-full">
+          <div className="flex-1 flex flex-col items-center justify-center bg-muted rounded-xl p-3 border border-border">
+            <div className="flex items-center gap-2 mb-1">
+              <Users className="w-6 h-6 mb-1 text-foreground" />
+              <div className="text-2xl font-bold leading-none">{bar.activeUsers}</div>
+            </div>
+            <div className="text-xs text-muted-foreground">คนในร้านขณะนี้</div>
+          </div>
+          <div className="flex-1 flex flex-col items-center justify-center bg-muted rounded-xl p-3 border border-border">
+            <div className="flex items-center gap-2 mb-1">
+              {bar.band?.image && (
+                <Image src={bar.band.image || "/default-band.png"} alt={bar.band.name} width={32} height={32} className="rounded-full object-cover" />
+              )}
+              <span className="text-xs text-muted-foreground">กำลังเล่นอยู่ในขณะนี้</span>
+            </div>
+            <div className="text-base font-semibold flex items-center gap-1">
+              {bar.band?.name || "วงดนตรี"}
+              <Music className="w-4 h-4" />
+            </div>
+            <div className="text-xs text-muted-foreground line-clamp-1">
+              {bar.band?.description || '"We\'re alternative rock band"'}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* User List */}
+      <div className="flex-1 bg-muted/40 px-0 pt-4 pb-8 overflow-y-auto">
+        <div className="flex flex-col gap-4 max-w-lg mx-auto">
+          {filteredUsers.map((user) => (
+            <div key={user.id} className="bg-card rounded-xl shadow border border-border flex items-center px-4 py-3 gap-3">
+              {/* Profile Image */}
+              <Image
+                src={user.avatar || "/default-avatar.png"}
+                alt={user.username}
+                width={56}
+                height={56}
+                className="rounded-full object-cover border-2 border-theme-pink flex-shrink-0 w-12 h-12"
+              />
+              {/* User Info */}
+              <div className="flex-1 min-w-0">
+                <div className="mb-1">
+                  <span className="inline-block bg-muted text-muted-foreground text-xs px-2 py-0.5 rounded-full mb-1">
+                    ต้องการใครสักคนที่เข้าใจ
+                  </span>
+                </div>
+                <div className="font-semibold text-sm leading-tight truncate">
+                  {user.username}
+                </div>
+                <div className="text-xs text-muted-foreground mb-1 truncate">
+                  {user.bio || "มหาสนั่นท์"}
+                </div>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {user.preferences?.favoriteCategories?.slice(0, 3).map((cat) => (
+                    <Badge
+                      key={cat}
+                      className="rounded-full px-2 py-0.5 border border-foreground/30 text-xs font-medium bg-background text-foreground"
+                    >
+                      #{cat}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Back to Bars Button */}
       <div className="mt-8 text-center">
@@ -255,6 +210,6 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
           ← Back to All Bars
         </Button>
       </div>
-    </>
+    </div>
   );
 }
