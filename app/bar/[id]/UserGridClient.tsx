@@ -80,7 +80,7 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
 
   return (
     <div className="bg-background text-foreground flex flex-col ">
-      <button onClick={() => router.push("/")} className="absolute right-4 top-4 rounded-full flex flex-col items-center z-10">
+      <button onClick={() => router.push("/")} className="absolute right-4 top-4 rounded-full flex flex-col items-center z-50">
         <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center">
           <svg
             width={22}
