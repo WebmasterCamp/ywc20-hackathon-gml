@@ -3,9 +3,26 @@ import { User } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, User as UserIcon, Briefcase, Circle } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function UserProfileClient({ user }: { user: User }) {
   const router = useRouter();
+
+  // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Add friend request handler
+  const handleFriendRequest = async () => {
+    setIsLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      router.push(`/chat/${user.id}`);
+    } catch (error) {
+      // Optionally handle error
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Placeholder badges
   const badges = [
@@ -80,8 +97,13 @@ export default function UserProfileClient({ user }: { user: User }) {
         ))}
       </div>
       {/* Action Button */}
-      <button className="w-full max-w-md mx-auto py-4 text-xl font-bold rounded-full bg-gradient-to-r from-[#F7B0E0] to-[#5B5BFF] text-white shadow-xl hover:from-[#FE8CC5] hover:to-[#9F45B0] transition mt-2" style={{ boxShadow: '0 4px 24px 0 #0002' }}>
-        ขอเป็นเพื่อนก่อนน้า :)
+      <button 
+        onClick={handleFriendRequest}
+        disabled={isLoading}
+        className="w-full max-w-md mx-auto py-4 text-xl font-bold rounded-full bg-gradient-to-r from-[#F7B0E0] to-[#5B5BFF] text-white shadow-xl hover:from-[#FE8CC5] hover:to-[#9F45B0] transition mt-2 disabled:opacity-50" 
+        style={{ boxShadow: '0 4px 24px 0 #0002' }}
+      >
+        {isLoading ? 'กำลังรอการตอบรับ...' : 'ขอเป็นเพื่อนก่อนน้า :)'}
       </button>
     </div>
   );
