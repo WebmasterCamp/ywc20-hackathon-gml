@@ -9,8 +9,8 @@ import { AuthProvider } from '@/components/auth/auth-provider';
 const baiJamjuree = Bai_Jamjuree({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export const metadata: Metadata = {
-  title: 'มานัส.ไทย',
-  description: 'หาเพื่อนเข้าบาร์ หาเวลาเข้าร่วม',
+  title: 'โคจร | Cojon',
+  description: 'หาเพื่อนเข้าบาร์ หาเวลาเข้าร่วม | Friend Finder for Bars',
 };
 
 export default function RootLayout({
