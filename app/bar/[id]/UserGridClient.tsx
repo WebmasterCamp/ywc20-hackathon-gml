@@ -206,5 +206,5 @@ export default function UserGridClient({ bar }: UserGridClientProps) {
         </Button>
       </div>
     </div>
-  );
+    );
 }
