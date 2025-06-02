@@ -4,7 +4,7 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 import { navItems } from "@/config/nav";
 import { cn } from "@/lib/utils";
-import { Beer, Users, Wine } from "lucide-react";
+import { Beer, Home, Plus, User, Users, Wine } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,29 +14,31 @@ export function Navbar() {
 
   // Mobile bottom navigation
   const mobileNav = (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl">
-      {/* Decorative foam bubbles */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pub-foam/80 to-transparent"></div>
-
-      <div className="grid h-full grid-cols-4 px-2 relative">
-        {/* Background pattern */}
-        <div className="absolute inset-0 bg-wood-texture opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-pub-mahogany/50 to-transparent"></div>
-
-        {navItems.map((item) => {
-          if (item.requiresAuth && !user) return null;
-          if (item.hideWhenAuth && user) return null;
-          const Icon = item.icon;
-          return (
-            <NavButton
-              key={item.href}
-              href={item.href}
-              icon={<Icon className="h-5 w-5" />}
-              label={item.label}
-              active={pathname === item.href}
-            />
-          );
-        })}
+    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gradient-to-r from-pub-mahogany to-pub-mahogany/95 backdrop-blur-md border-t border-pub-brass/40 md:hidden shadow-2xl flex items-center justify-center">
+      <div className="flex w-full max-w-md mx-auto justify-between items-center px-8 relative">
+        {/* Home */}
+        <Link href="/" className={cn(
+          "flex flex-col items-center justify-center text-pub-foam hover:text-pub-amber transition-all",
+          pathname === "/" ? "font-bold text-pub-amber" : ""
+        )}>
+          <Home className="h-7 w-7 mb-1" />
+          <span className="text-xs">Home</span>
+        </Link>
+        {/* Add Note */}
+        <Link href="/note" className={cn(
+          "flex flex-col items-center justify-center bg-pub-amber text-pub-mahogany rounded-full p-3 shadow-lg -mt-14 border-4 border-pub-mahogany hover:bg-pub-gold transition-all",
+          pathname === "/note" ? "scale-110" : ""
+        )}>
+          <Plus className="h-7 w-7" />
+        </Link>
+        {/* Me */}
+        <Link href="/me" className={cn(
+          "flex flex-col items-center justify-center text-pub-foam hover:text-pub-amber transition-all",
+          pathname === "/me" ? "font-bold text-pub-amber" : ""
+        )}>
+          <User className="h-7 w-7 mb-1" />
+          <span className="text-xs">Me</span>
+        </Link>
       </div>
     </div>
   );
@@ -106,36 +108,6 @@ interface NavButtonProps {
   icon: React.ReactNode;
   label: string;
   active: boolean;
-}
-
-function NavButton({ href, icon, label, active }: NavButtonProps) {
-  return (
-    <Link href={href} className={cn(
-      "flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-all duration-300 active:scale-95 group relative overflow-hidden", active
-      ? "text-pub-foam bg-pub-amber/30 shadow-lg border border-pub-brass/50"
-      : "text-pub-foam hover:text-pub-foam hover:bg-pub-amber/20 hover:border-pub-brass/40 border border-transparent"
-    )}>
-      {active && (
-        <div className="absolute inset-0 bg-gradient-to-t from-pub-amber/30 to-transparent rounded-lg"></div>
-      )}
-
-      <div className={cn(
-        "transition-all duration-300 relative z-10",
-        active ? "scale-110" : "group-hover:scale-110"
-      )}>
-        {icon}
-      </div>
-
-      <span className={cn(
-        "text-xs mt-1 font-medium transition-all duration-300 relative z-10",
-        active
-          ? "text-pub-foam font-semibold"
-          : "text-pub-foam group-hover:text-pub-foam"
-      )}>{label}</span>
-
-      <div className="absolute inset-0 bg-pub-gold/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 opacity-0 group-hover:opacity-100"></div>
-    </Link>
-  );
 }
 
 function SidebarNavButton({ href, icon, label, active }: NavButtonProps) {
