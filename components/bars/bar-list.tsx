@@ -14,6 +14,7 @@ interface Bar {
   genre: string;
   todaysBand: string;
   activeUsers: number;
+  isOpen: boolean;
   coordinates?: {
     lat: number;
     lng: number;
@@ -28,11 +29,8 @@ export function BarList() {
   const sortedBars = useMemo(() => {
     return [...bars].sort((a, b) => {
       // First sort by status (open bars first)
-      const aIsOpen = parseInt(a.id) % 2 === 0;
-      const bIsOpen = parseInt(b.id) % 2 === 0;
-
-      if (aIsOpen !== bIsOpen) {
-        return aIsOpen ? -1 : 1;
+      if (a.isOpen !== b.isOpen) {
+        return a.isOpen ? -1 : 1;
       }
 
       // Then sort by number of people (descending)
@@ -109,16 +107,16 @@ export function BarList() {
               </div>
 
               {/* Info box */}
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2 px-4 py-3 bg-card border-2 border-border rounded-lg shadow-xl whitespace-nowrap min-w-max">
+              <div className="absolute -top-20 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl bg-card border-2 border-border shadow-xl whitespace-nowrap min-w-max">
                 <p className="text-sm font-semibold text-card-foreground mb-2">{bar.name}</p>
                 <div className="flex items-center gap-3 text-xs">
                   <div className="flex items-center gap-1">
-                    <div className="w-3 h-3 rounded-full bg-theme-purple"></div>
-                    <span className="font-medium text-muted-foreground">{genderCounts.male}M</span>
+                    <span className="font-medium text-muted-foreground">ชาย</span>
+                    <span className="font-medium text-muted-foreground">{genderCounts.male}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <div className="w-3 h-3 rounded-full bg-theme-pink"></div>
-                    <span className="font-medium text-muted-foreground">{genderCounts.female}F</span>
+                    <span className="font-medium text-muted-foreground">หญิง</span>
+                    <span className="font-medium text-muted-foreground">{genderCounts.female}</span>
                   </div>
                 </div>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-border"></div>
@@ -144,12 +142,11 @@ export function BarList() {
           <div className="p-4 space-y-4 max-h-80 overflow-y-auto">
             {sortedBars.map((bar, index) => {
               const genderCounts = getGenderCounts(bar.id, bar.activeUsers);
-              const isOpen = parseInt(bar.id) % 2 === 0;
               return (
                 <div
                   key={bar.id}
-                  className={cn(!isOpen ? "opacity-50" : "cursor-pointer", "group relative rounded-xl border-2 border-border transition-all duration-300  hover:shadow-lg bg-card hover:bg-card/80 hover:border-primary/50 overflow-hidden")}
-                  onClick={() => isOpen && router.push(`/bar/${bar.id}`)}
+                  className={cn(!bar.isOpen ? "opacity-50" : "cursor-pointer", "group relative rounded-xl border-2 border-border transition-all duration-300  hover:shadow-lg bg-card hover:bg-card/80 hover:border-primary/50 overflow-hidden")}
+                  onClick={() => bar.isOpen && router.push(`/bar/${bar.id}`)}
                 >
                   <div className="flex">
                     <div className="relative w-32 flex-shrink-0">
@@ -164,11 +161,11 @@ export function BarList() {
                       {/* Status indicator overlay */}
                       <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-background/50 backdrop-blur-sm">
                         <div
-                          className={`w-2 h-2 rounded-full transition-colors ${isOpen ? "bg-green-500" : "bg-yellow-500"
+                          className={`w-2 h-2 rounded-full transition-colors ${bar.isOpen ? "bg-green-500" : "bg-yellow-500"
                             }`}
                         />
                         <span className="text-xs font-medium text-theme-light-pink">
-                          {isOpen ? "เปิด" : "ปิดเร็ว"}
+                          {bar.isOpen ? "เปิด" : "ปิดเร็ว"}
                         </span>
                       </div>
                     </div>
@@ -204,12 +201,16 @@ export function BarList() {
                           <div className="flex items-center gap-1 text-xs">
                             <div className="w-2 h-2 rounded-full bg-theme-purple"></div>
                             <span className="font-medium text-muted-foreground">
-                             
-                              {genderCounts.male}</span>
+                              ชาย
+                              <span className="font-medium text-muted-foreground"> {genderCounts.male}</span>
+                            </span>
                           </div>
                           <div className="flex items-center gap-1 text-xs">
                             <div className="w-2 h-2 rounded-full bg-theme-pink"></div>
-                            <span className="font-medium text-muted-foreground">{genderCounts.female}F</span>
+                            <span className="font-medium text-muted-foreground">
+                              หญิง
+                              <span className="font-medium text-muted-foreground"> {genderCounts.female}</span>
+                            </span>
                           </div>
                         </div>
 

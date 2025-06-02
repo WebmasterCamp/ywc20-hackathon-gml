@@ -10,6 +10,7 @@ export interface Bar {
   features: string[];
   genre: string;
   todaysBand: string;
+  isOpen: boolean;
   coordinates: {
     lat: number;
     lng: number;
@@ -36,6 +37,7 @@ export const MOCK_BARS: Bar[] = [
     genre: "อินดี้ป็อป",
     distance: "0.3 KM",
     todaysBand: "วง The Young Blues",
+    isOpen: true,
     coordinates: { lat: 14.046505, lng: 100.595893 }
   },
  
