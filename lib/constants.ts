@@ -180,6 +180,22 @@ export const MOCK_USERS: User[] = [
     }
   },
   {
+    id: "thnick",
+    username: "TH-Nick",
+    email: "ทดสอบ@ทดสอบ.ไทย",
+    password: "adminadmin",
+    avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
+    bio: "System Administrator",
+    note: "กำลังมองหาเพื่อนดื่ม",
+    favoriteBarIds: [],
+    currentBarId: "1",
+    joinDate: "2023-01-01T00:00:00Z",
+    preferences: {
+      favoriteCategories: ["pub", "bar", "club", "bistro"],
+      notifications: true
+    }
+  },
+  {
     id: "cojoin",
     username: "cojoin",
     email: "cojoin@โคจร.ไทย",
