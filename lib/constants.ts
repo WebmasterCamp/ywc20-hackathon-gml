@@ -166,7 +166,7 @@ export const MOCK_USERS: User[] = [
   {
     id: "admin",
     username: "admin",
-    email: "admin@โคจร.ไทย",
+    email: "แอดมิน@โคจร.ไทย",
     password: "adminadmin",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "System Administrator",
@@ -180,8 +180,8 @@ export const MOCK_USERS: User[] = [
     }
   },
   {
-    id: "thnick",
-    username: "TH-Nick",
+    id: "thnic",
+    username: "THNic",
     email: "ทดสอบ@ทดสอบ.ไทย",
     password: "adminadmin",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
@@ -198,7 +198,7 @@ export const MOCK_USERS: User[] = [
   {
     id: "cojoin",
     username: "cojoin",
-    email: "cojoin@โคจร.ไทย",
+    email: "ทดสอบ@โคจร.ไทย",
     password: "adminadmin",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2",
     bio: "System Administrator",
