@@ -16,7 +16,7 @@ const formSchema = z.object({
     .refine((email) => {
       const emailRegex = /^[a-zA-Z0-9\u0E00-\u0E7F._-]+@[a-zA-Z0-9\u0E00-\u0E7F.-]+\.[a-zA-Z\u0E00-\u0E7F]{2,}$/;
       return emailRegex.test(email);
-    }, { message: "กรุณากรอกที่อยู่อีเมลที่ถูกต้อง (รองรับโดเมนไทย)" }),
+    }, { message: "กรุณากรอกที่อยู่อีเมลที่ถูกต้อง" }),
 });
 
 interface EmailFormProps {

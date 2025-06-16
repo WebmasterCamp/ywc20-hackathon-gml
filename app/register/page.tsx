@@ -16,12 +16,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/components/auth/auth-provider";
 import { Camera } from "lucide-react";
 
+const emailRegex = /^[a-zA-Z0-9\u0E00-\u0E7F._-]+@[a-zA-Z0-9\u0E00-\u0E7F.-]+\.[a-zA-Z\u0E00-\u0E7F]{2,}$/;
+
 const formSchema = z.object({
   username: z
     .string()
     .min(3, { message: "Username must be at least 3 characters" })
     .max(20, { message: "Username must be less than 20 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
+  email: z.string()
+    .min(1, { message: "Email is required" })
+    .refine((email) => emailRegex.test(email), { message: "Please enter a valid email address (Thai domains supported)" }),
   name: z.string().min(1, { message: "Name is required" }),
   age: z.number().min(18, { message: "Must be at least 18 years old" }).max(100, { message: "Please enter a valid age" }),
   gender: z.enum(["male", "female"], { message: "Please select a gender" }),
@@ -42,7 +46,7 @@ export default function RegisterPage() {
       username: "",
       email: "",
       name: "",
-      age: undefined,
+      age: 18,
       gender: undefined,
       career: "",
       description: "",
@@ -72,10 +76,10 @@ export default function RegisterPage() {
         profileImage,
       }));
       toast({
-        title: "OTP Sent!",
-        description: "Please check your email for the verification code.",
+        title: "Account created successfullyn't",
+        description: "Actually its already sent request via form already, but due to the nature of this demo, we will redirect you to login page. and you still cant login email you just registered. use ทดสอบ@ทดสอบ.ไทย as email instead.",
       });
-      router.push(`/verify-otp?email=${encodeURIComponent(values.email)}`);
+      router.push(`/login`);
     } catch (error) {
       toast({
         variant: "destructive",
